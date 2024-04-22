@@ -4,23 +4,22 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Series de Tiempo Actividad 1</title>
-  <meta name="description" content="Series de Tiempo Actividad 1" />
+  <title>2 Selección de la Variable Meteorológica: La Temperatura | Series de Tiempo Actividad 1</title>
+  <meta name="description" content="2 Selección de la Variable Meteorológica: La Temperatura | Series de Tiempo Actividad 1" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Series de Tiempo Actividad 1" />
+  <meta property="og:title" content="2 Selección de la Variable Meteorológica: La Temperatura | Series de Tiempo Actividad 1" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Series de Tiempo Actividad 1" />
+  <meta name="twitter:title" content="2 Selección de la Variable Meteorológica: La Temperatura | Series de Tiempo Actividad 1" />
   
   
   
 
-<meta name="author" content="Grupo 5:" />
 <meta name="author" content="Yamuna Mena Ramirez" />
 <meta name="author" content="Angelica Forero Artunduaga" />
 <meta name="author" content="Leidy Conde Chavarro" />
@@ -33,7 +32,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
+<link rel="prev" href="index.html"/>
 
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -79,9 +78,10 @@
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="#selección-de-la-base-de-datos"><i class="fa fa-check"></i><b>1</b> Selección de la base de datos</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Selección de la base de datos</a></li>
+<li class="chapter" data-level="2" data-path="selección-de-la-variable-meteorológica-la-temperatura.html"><a href="selección-de-la-variable-meteorológica-la-temperatura.html"><i class="fa fa-check"></i><b>2</b> Selección de la Variable Meteorológica: <strong>La Temperatura</strong></a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="#selección-de-la-variable-temperatura"><i class="fa fa-check"></i><b>1.1</b> Selección de la Variable <strong>Temperatura</strong></a></li>
+<li class="chapter" data-level="2.1" data-path="selección-de-la-variable-meteorológica-la-temperatura.html"><a href="selección-de-la-variable-meteorológica-la-temperatura.html#usage"><i class="fa fa-check"></i><b>2.1</b> Usage</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -103,29 +103,14 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Series de Tiempo Actividad 1</h1>
-<p class="author"><em>Grupo 5:</em></p>
-<p class="author"><em>Yamuna Mena Ramirez</em></p>
-<p class="author"><em>Angelica Forero Artunduaga</em></p>
-<p class="author"><em>Leidy Conde Chavarro</em></p>
-<p class="date"><em>2024-04-22</em></p>
-</div>
-<div id="selección-de-la-base-de-datos" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">1</span> Selección de la base de datos<a href="#selección-de-la-base-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Se ha elegido la base de datos <strong>“Daily Climate time series data”</strong>, disponible al público y desarrollada por la Universidad PES. Se Puede acceder a ella a través del siguiente enlace::</p>
-<p><a href="https://www.kaggle.com/datasets/sumanthvrao/daily-climate-time-series-data/data" class="uri">https://www.kaggle.com/datasets/sumanthvrao/daily-climate-time-series-data/data</a>.</p>
-<p>Esta base de datos contiene registros meteorológicos recopilados en la ciudad de Delhi durante un período de 4 años (de 2013 a 2017). Los atributos incluyen la fecha, temperatura media, humedad, velocidad del viento y presión atmosférica, con más de 1400 registros disponibles.</p>
-<div id="selección-de-la-variable-temperatura" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> Selección de la Variable <strong>Temperatura</strong><a href="#selección-de-la-variable-temperatura" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Se elige la serie de tiempo de la temperatura como variable para el proceso de pronóstico. Esta decisión se basa en la relevancia global de la temperatura y su influencia significativa en múltiples áreas.</p>
-<p>En el contexto práctico, el pronostico de la temperatura es beneficioso porque:</p>
-<ul>
-<li><p>El pronostico de la temperatura facilita la anticipación de condiciones climáticas extremas como olas de calor, tormentas y fenómenos como El Niño y La Niña. Esto permite adoptar medidas de protección para garantizar la seguridad de las personas y sus propiedades.</p></li>
-<li><p>La temperatura es de gran importancia en sectores como la agricultura, donde afecta los ciclos de cultivo y la productividad. Asimismo, en el ámbito energético, las variaciones de temperatura influyen directamente en la demanda de energía y la eficiencia de fuentes renovables como la solar y eólica.</p></li>
-<li><p>El pronóstico preciso de la temperatura es importante para la economía, ya que permite a las empresas y sectores económicos anticipar y mitigar riesgos financieros asociados con eventos climáticos. Al contar con información anticipada sobre las variaciones de temperatura, las empresas pueden ajustar su producción, inventario y estrategias de mercado, evitando pérdidas económicas por condiciones climáticas adversas.</p></li>
-<li><p>La comprensión de la temperatura a lo largo del tiempo contribuye al estudio del clima y el cambio climático. Esto apoya la investigación científica en áreas como meteorología y climatología, proporcionando datos valiosos para entender mejor nuestro entorno y los desafíos que enfrentamos.</p></li>
-</ul>
+<div id="selección-de-la-variable-meteorológica-la-temperatura" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Selección de la Variable Meteorológica: <strong>La Temperatura</strong><a href="selección-de-la-variable-meteorológica-la-temperatura.html#selección-de-la-variable-meteorológica-la-temperatura" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Se elige la serie de tiempo de la temperatura como variable fundamental para el proceso de pronóstico. Esta decisión se basa en la relevancia global de la temperatura y su influencia significativa en múltiples áreas</p>
+<div id="usage" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Usage<a href="selección-de-la-variable-meteorológica-la-temperatura.html#usage" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Each <strong>bookdown</strong> chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter <em>must</em> start with a first-level heading: <code># A good chapter</code>, and can contain one (and only one) first-level heading.</p>
+<p>Use second-level and higher headings within chapters like: <code>## A short section</code> or <code>### An even shorter section</code>.</p>
+<p>The <code>index.Rmd</code> file is required, and is also your first book chapter. It will be the homepage when you render the book.</p>
 
 </div>
 </div>
@@ -134,7 +119,7 @@
           </div>
         </div>
       </div>
-
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>

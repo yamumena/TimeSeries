@@ -1,4 +1,6 @@
 about
 usage
-render-book
-preview-book
+selección-de-la-base-de-datos
+selección-de-la-variable-meteorológica-la-temperatura
+selección-de-la-variable-meteorológica-temperatura
+selección-de-la-variable-temperatura
