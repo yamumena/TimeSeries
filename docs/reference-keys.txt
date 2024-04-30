@@ -1,0 +1,9 @@
+selección-de-la-base-de-datos
+selección-de-la-variable-temperatura
+análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad
+carga-de-datos
+resumen-general-de-la-serie-temporal
+visualización-de-la-serie-temporal
+media-movil
+rezago
+calcular-la-autocorrelación

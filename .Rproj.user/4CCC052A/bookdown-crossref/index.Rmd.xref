@@ -1,3 +1,10 @@
 h1:selección-de-la-base-de-datos Selección de la base de datos
 h2:selección-de-la-variable-temperatura Selección de la Variable 
+h1:análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad Análisis Exploratorio de Datos (EDA): Promedio Móvil, Rezagos y Estacionalidad
+h2:carga-de-datos Carga de datos
+h2:resumen-general-de-la-serie-temporal Resumen general de la serie temporal
+h2:visualización-de-la-serie-temporal Visualización de la serie temporal
+h2:media-movil Media movil
+h2:rezago Rezago
+h3:calcular-la-autocorrelación Calcular la autocorrelación
 
