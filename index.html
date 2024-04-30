@@ -26,7 +26,7 @@
 <meta name="author" content="Leidy Conde Chavarro" />
 
 
-<meta name="date" content="2024-04-22" />
+<meta name="date" content="2024-04-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,7 +34,7 @@
   
   
 
-
+<link rel="next" href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -79,9 +79,20 @@
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="#selección-de-la-base-de-datos"><i class="fa fa-check"></i><b>1</b> Selección de la base de datos</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Selección de la base de datos</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="#selección-de-la-variable-temperatura"><i class="fa fa-check"></i><b>1.1</b> Selección de la Variable <strong>Temperatura</strong></a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#selección-de-la-variable-temperatura"><i class="fa fa-check"></i><b>1.1</b> Selección de la Variable <strong>Temperatura</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><i class="fa fa-check"></i><b>2</b> Análisis Exploratorio de Datos (EDA): Promedio Móvil, Rezagos y Estacionalidad</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#carga-de-datos"><i class="fa fa-check"></i><b>2.1</b> Carga de datos</a></li>
+<li class="chapter" data-level="2.2" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#resumen-general-de-la-serie-temporal"><i class="fa fa-check"></i><b>2.2</b> Resumen general de la serie temporal</a></li>
+<li class="chapter" data-level="2.3" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#visualización-de-la-serie-temporal"><i class="fa fa-check"></i><b>2.3</b> Visualización de la serie temporal</a></li>
+<li class="chapter" data-level="2.4" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#media-movil"><i class="fa fa-check"></i><b>2.4</b> Media movil</a></li>
+<li class="chapter" data-level="2.5" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#rezago"><i class="fa fa-check"></i><b>2.5</b> Rezago</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#calcular-la-autocorrelación"><i class="fa fa-check"></i><b>2.5.1</b> Calcular la autocorrelación</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -109,15 +120,15 @@
 <p class="author"><em>Yamuna Mena Ramirez</em></p>
 <p class="author"><em>Angelica Forero Artunduaga</em></p>
 <p class="author"><em>Leidy Conde Chavarro</em></p>
-<p class="date"><em>2024-04-22</em></p>
+<p class="date"><em>2024-04-30</em></p>
 </div>
 <div id="selección-de-la-base-de-datos" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">1</span> Selección de la base de datos<a href="#selección-de-la-base-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<h1><span class="header-section-number">1</span> Selección de la base de datos<a href="index.html#selección-de-la-base-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Se ha elegido la base de datos <strong>“Daily Climate time series data”</strong>, disponible al público y desarrollada por la Universidad PES. Se Puede acceder a ella a través del siguiente enlace::</p>
 <p><a href="https://www.kaggle.com/datasets/sumanthvrao/daily-climate-time-series-data/data" class="uri">https://www.kaggle.com/datasets/sumanthvrao/daily-climate-time-series-data/data</a>.</p>
 <p>Esta base de datos contiene registros meteorológicos recopilados en la ciudad de Delhi durante un período de 4 años (de 2013 a 2017). Los atributos incluyen la fecha, temperatura media, humedad, velocidad del viento y presión atmosférica, con más de 1400 registros disponibles.</p>
 <div id="selección-de-la-variable-temperatura" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> Selección de la Variable <strong>Temperatura</strong><a href="#selección-de-la-variable-temperatura" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">1.1</span> Selección de la Variable <strong>Temperatura</strong><a href="index.html#selección-de-la-variable-temperatura" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Se elige la serie de tiempo de la temperatura como variable para el proceso de pronóstico. Esta decisión se basa en la relevancia global de la temperatura y su influencia significativa en múltiples áreas.</p>
 <p>En el contexto práctico, el pronostico de la temperatura es beneficioso porque:</p>
 <ul>
@@ -135,7 +146,7 @@
         </div>
       </div>
 
-
+<a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
