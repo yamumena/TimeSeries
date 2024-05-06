@@ -43,6 +43,8 @@ library(tidyverse)
 #library(dplyr)
 library(ggplot2)
 library(readxl)
+library(tseries)
+library(forecast)
 ```
 
 # Análisis Exploratorio de Datos (EDA): Promedio Móvil, Rezagos y Estacionalidad
@@ -140,4 +142,69 @@ acf_result <- acf(ts_data, lag.max = 365, main = iconv("Autocorrelación de Temp
 * Es importante destacar que las correlaciones positivas indican una tendencia a que las temperaturas altas o bajas persistan en el tiempo. Por ejemplo, si hoy es un día cálido, es probable que mañana también lo sea. En contraste, cuando las correlaciones son negativas, sugieren una reversión en la tendencia. Es decir, si hoy es más cálido de lo normal, es probable que mañana sea más frío de lo normal, y viceversa. En este caso, esta reversión negativa se observa entre el rezago 89 (88 días atrás) y el 279 (278 días atrás).
 
 
+# Análisis Exploratorio de Datos (EDA): Descomposición, Estacionariedad y la Diferenciación
 
+En esta sección, proporcionaremos una vista general de los datos utilizando la evaluaciòn de la descomposición, estacionariedad y la diferenciación.
+
+## Descomposición 
+
+La descomposición de series de tiempo es una técnica esencial en el análisis de datos temporales, permitiendo desglosar una serie en sus componentes principales: tendencia, estacionalidad y ruido. Al aplicar esta técnica a la serie temporal de temperatura, se revela el comportamiento estacional observado previamente, así como la tendencia y la componente de ruido de manera detallada. Esta última representa la variabilidad aleatoria o irregular que no puede atribuirse a la tendencia ni a la estacionalidad previamente identificadas.
+
+```{r}
+descomposicion <- decompose(ts_data)
+
+plot(descomposicion)
+
+```
+
+En las graficas anteriores se observa lo siqguiente:
+
+* La tendencia de la serie temporal indica un aumento gradual en las temperaturas a lo largo del tiempo, aunque inicialmente este incremento puede parecer moderado o bastante lento. Sin embargo, en los últimos dos años se ha observado un incremento más pronunciado, sugiriendo que el calentamiento global podría estar acelerándose. y esperando ese posible comportamiento al aumento en proximos años.
+
+* A pesar de que hay una tendencia lenta o moderada hacia el aumento de la temperatura al pasar los años, la estacionalidad parece mantenerse constante.
+
+* En cuanto al componente de ruido, se evidencian fluctuaciones que no pueden ser explicadas por la tendencia ni por la estacionalidad de la serie temporal de temperatura. A pesar de la presencia de estas fluctuaciones no sistemáticas, aún se percibe claramente la presencia de la tendencia y la estacionalidad en la serie de tiempo.
+
+## Estacionariedad
+
+Para que una serie de tiempo sea considerada estacionaria, es importante que tanto la media como la varianza se mantengan constantes a lo largo del tiempo. Es decir, la serie no debe exhibir tendencias a largo plazo ni variaciones sistemáticas en su comportamiento a medida que transcurre el tiempo. Para lograr la estacionariedad, se deben cumplir los siguientes requisitos:
+
+- Media Constante: La media de la serie debe permanecer invariable a lo largo del tiempo, lo que indica la ausencia de tendencias significativas hacia arriba o hacia abajo en la serie.
+
+- Varianza Constante: Asimismo, la varianza de la serie debe mantenerse constante a lo largo del tiempo. Esto implica que la amplitud de las fluctuaciones alrededor de la media no experimenta cambios significativos a medida que progresa el tiempo.
+
+- Autocovarianza Constante: Es fundamental que la covarianza entre dos puntos de datos separados por un cierto intervalo de tiempo permanezca constante. En otras palabras, la relación entre los valores de la serie en diferentes momentos no debe cambiar a medida que avanza el tiempo.
+
+Estos principios son fundamentales para garantizar la estacionariedad de una serie de tiempo, aunque en la práctica se pueden utilizar técnicas adicionales, como la diferenciación, para lograr este objetivo.
+
+### Verificar si la serie de temperatura es estacionaria
+
+Para evaluar la estacionariedad de una serie de tiempo, podemos llevar a cabo varios métodos:
+
+1. Realizar un análisis visual aplicando los principios previamente mencionados para detectar si la serie presenta una media y varianza constantes a lo largo del tiempo.
+
+2. Aplicar la prueba de Dickey-Fuller, la cual busca determinar si una serie de tiempo posee una raíz unitaria. La presencia de esta raíz implica una tendencia determinística en la serie, lo cual contradice los principios de estacionariedad mencionados anteriormente. La hipótesis nula de esta prueba es que la serie de tiempo tiene una raíz unitaria, lo que indica no estacionariedad. Si el valor p asociado con la prueba es menor que un nivel de significancia predefinido (generalmente 0.05), se rechaza la hipótesis nula y se concluye que la serie de tiempo es estacionaria.
+
+#### Análisis visual 
+
+* Enfatizando en las gráficas presentadas para la descomposición de la serie, se observa que esta no cumple estrictamente los principios de estacionariedad. Por ejemplo, la media no permanece constante y se observa la presencia de una tendencia ascendente.
+
+#### Prueba de Dickey-Fuller
+
+```{r}
+# 2. Prueba de raíz unitaria (ADF)
+
+prueba_adf <- adf.test(ts_data)
+
+print(prueba_adf)
+```
+
+* Debido a que el valor p (0.3) es superior al nivel de significancia de 0.05, se sugiere que la serie de tiempo posiblemente contiene una raíz unitaria y, por ende, no es estacionaria.
+
+Concluyendo, empleamos la función ndiffs para determinar el número óptimo de diferenciaciones necesario para hacer que la serie de tiempo sea estacionaria. El objetivo es identificar el mínimo número de diferenciaciones requeridas para eliminar tanto la tendencia como la estacionalidad de la serie.
+
+```{r}
+# Número de diferenciaciones
+
+ndiffs(ts_data)
+```

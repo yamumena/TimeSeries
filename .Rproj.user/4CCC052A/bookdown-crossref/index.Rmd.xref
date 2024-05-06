@@ -7,4 +7,10 @@ h2:visualización-de-la-serie-temporal Visualización de la serie temporal
 h2:media-movil Media movil
 h2:rezago Rezago
 h3:calcular-la-autocorrelación Calcular la autocorrelación
+h1:análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación Análisis Exploratorio de Datos (EDA): Descomposición, Estacionariedad y la Diferenciación
+h2:descomposición Descomposición
+h2:estacionariedad Estacionariedad
+h3:verificar-si-la-serie-de-temperatura-es-estacionaria Verificar si la serie de temperatura es estacionaria
+h4:análisis-visual Análisis visual
+h4:prueba-de-dickey-fuller Prueba de Dickey-Fuller
 

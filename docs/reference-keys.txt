@@ -7,3 +7,9 @@ visualización-de-la-serie-temporal
 media-movil
 rezago
 calcular-la-autocorrelación
+análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación
+descomposición
+estacionariedad
+verificar-si-la-serie-de-temperatura-es-estacionaria
+análisis-visual
+prueba-de-dickey-fuller
