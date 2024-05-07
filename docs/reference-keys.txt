@@ -13,3 +13,7 @@ estacionariedad
 verificar-si-la-serie-de-temperatura-es-estacionaria
 análisis-visual
 prueba-de-dickey-fuller
+diferenciación
+estacionalidad
+prueba-de-kendall
+prueba-de-dickey-fuller-para-la-serie-diferenciada

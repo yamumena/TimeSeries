@@ -157,6 +157,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.5.1" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#calcular-la-autocorrelación"><i class="fa fa-check"></i><b>2.5.1</b> Calcular la autocorrelación</a></li>
 </ul></li>
+<li class="chapter" data-level="2.6" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#estacionalidad"><i class="fa fa-check"></i><b>2.6</b> Estacionalidad</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#prueba-de-kendall"><i class="fa fa-check"></i><b>2.6.1</b> Prueba de kendall</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><i class="fa fa-check"></i><b>3</b> Análisis Exploratorio de Datos (EDA): Descomposición, Estacionariedad y la Diferenciación</a>
 <ul>
@@ -164,6 +168,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#estacionariedad"><i class="fa fa-check"></i><b>3.2</b> Estacionariedad</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#verificar-si-la-serie-de-temperatura-es-estacionaria"><i class="fa fa-check"></i><b>3.2.1</b> Verificar si la serie de temperatura es estacionaria</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#diferenciación"><i class="fa fa-check"></i><b>3.3</b> Diferenciación</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#prueba-de-dickey-fuller-para-la-serie-diferenciada"><i class="fa fa-check"></i><b>3.3.1</b> Prueba de Dickey-Fuller para la serie diferenciada</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -258,6 +266,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p>Se observa que a medida de que nos alejamos del primer valor, las correlaciones disminuyen gradualmente hasta que eventualmente se vuelven negativas. El pico más alto negativo se registra en el rezago 196 (equivalente a 195 días atrás), con una correlación de -0.5927, lo que sugiere una reversión de tendencia a medida que los rezagos aumentan. Sin embargo, la correlación vuelve a disminuir hasta el rezago 288 (287 días atrás), donde se observa un nuevo incremento en la correlación. Este patrón sugiere la presencia de un ciclo estacional en los datos de temperatura. Dado que se estan analizando datos de temperatura diaria, esto confirmaria el ciclo estacional anual que se ha venido observando.</p></li>
 <li><p>Es importante destacar que las correlaciones positivas indican una tendencia a que las temperaturas altas o bajas persistan en el tiempo. Por ejemplo, si hoy es un día cálido, es probable que mañana también lo sea. En contraste, cuando las correlaciones son negativas, sugieren una reversión en la tendencia. Es decir, si hoy es más cálido de lo normal, es probable que mañana sea más frío de lo normal, y viceversa. En este caso, esta reversión negativa se observa entre el rezago 89 (88 días atrás) y el 279 (278 días atrás).</p></li>
+</ul>
+</div>
+</div>
+<div id="estacionalidad" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Estacionalidad<a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#estacionalidad" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Hasta el momento, hemos observado ciclos distintivos en la serie de tiempo proporcionada, la cual se enfoca en la temperatura. Tales ciclos son típicos en series temporales asociadas al clima. Para determinar la presencia de estacionalidad en una serie de tiempo, se puede utilizar:</p>
+<ol style="list-style-type: decimal">
+<li><p>Análisis gráfico: Al representar gráficamente la serie de tiempo, es posible identificar patrones recurrentes que sugieren estacionalidad, como la presencia de picos y valles que se repiten en intervalos regulares.</p></li>
+<li><p>Prueba de estacionalidad de Mann-Kendall: Esta prueba, que es no paramétrica, evalúa la presencia de tendencias monótonas a lo largo del tiempo en la serie de tiempo. Una serie que exhibe estacionalidad a menudo carecerá de una tendencia monótona clara.</p></li>
+<li><p>Análisis de autocorrelación: Al calcular la autocorrelación de la serie de tiempo en diferentes rezagos, se puede determinar si existen autocorrelaciones significativas en los rezagos que están relacionados con la longitud de la estacionalidad supuesta. Como pudimos observar en el análisis de rezago, existen autocorrelaciones significativas en algunos rezagos que podrían indicarnos una estacionalidad anual.Como observamos en el análisis de rezagos, hemos identificado autocorrelaciones significativas en ciertos rezagos. Estas observaciones sugieren la posibilidad de una estacionalidad anual en los datos.</p></li>
+<li><p>Pruebas de estacionalidad de Box-Pierce o Ljung-Box: Estas pruebas se utiliza para evaluar si hay autocorrelaciones significativas en la serie después de eliminar cualquier componente de tendencia y estacionalidad. Si hay autocorrelaciones significativas en los rezagos que corresponden a la estacionalidad, esto puede indicar la presencia de estacionalidad en la serie.</p></li>
+<li><p>Descomposición estacional: Mediante técnicas de descomposición de series de tiempo, es posible separar los componentes de tendencia, estacionalidad y aleatoriedad. Si la componente estacional es notable en comparación con los otros componentes, esto puede indicar la presencia de estacionalidad en la serie.</p></li>
+</ol>
+<div id="prueba-de-kendall" class="section level3 hasAnchor" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> Prueba de kendall<a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#prueba-de-kendall" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#cb11-1" tabindex="-1"></a><span class="co"># Prueba de Kendall</span></span>
+<span id="cb11-2"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#cb11-2" tabindex="-1"></a>test_kendall <span class="ot">&lt;-</span> <span class="fu">MannKendall</span>(ts_data)</span>
+<span id="cb11-3"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#cb11-3" tabindex="-1"></a><span class="fu">print</span>(test_kendall)</span></code></pre></div>
+<pre><code>## tau = 0.0755, 2-sided pvalue =1.5497e-05</code></pre>
+<ul>
+<li><p>El resultado de la prueba muestra un valor de tau de 0.146 y un p-valor menor a 0.05. Esto indica que hay evidencia significativa para rechazar la hipótesis nula de ausencia de estacionalidad en la serie de tiempo. Es decir, se sugiere la presencia de una tendencia monotónica en los datos, lo que podría ser indicativo de estacionalidad.</p></li>
+<li><p>Retomando el análisis grafico que se ha venido haciendo y de rezago, se puede comprobar visualmente que la serie presenta un comportamiento estacional cada año.</p></li>
 </ul>
 </div>
 </div>

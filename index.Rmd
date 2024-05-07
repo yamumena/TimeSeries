@@ -45,6 +45,8 @@ library(ggplot2)
 library(readxl)
 library(tseries)
 library(forecast)
+library(Kendall)
+
 ```
 
 # Análisis Exploratorio de Datos (EDA): Promedio Móvil, Rezagos y Estacionalidad
@@ -142,6 +144,32 @@ acf_result <- acf(ts_data, lag.max = 365, main = iconv("Autocorrelación de Temp
 * Es importante destacar que las correlaciones positivas indican una tendencia a que las temperaturas altas o bajas persistan en el tiempo. Por ejemplo, si hoy es un día cálido, es probable que mañana también lo sea. En contraste, cuando las correlaciones son negativas, sugieren una reversión en la tendencia. Es decir, si hoy es más cálido de lo normal, es probable que mañana sea más frío de lo normal, y viceversa. En este caso, esta reversión negativa se observa entre el rezago 89 (88 días atrás) y el 279 (278 días atrás).
 
 
+## Estacionalidad
+
+Hasta el momento, hemos observado ciclos distintivos en la serie de tiempo proporcionada, la cual se enfoca en la temperatura. Tales ciclos son típicos en series temporales asociadas al clima. Para determinar la presencia de estacionalidad en una serie de tiempo, se puede utilizar:
+
+1. Análisis gráfico: Al representar gráficamente la serie de tiempo, es posible identificar patrones recurrentes que sugieren estacionalidad, como la presencia de picos y valles que se repiten en intervalos regulares.
+
+2. Prueba de estacionalidad de Mann-Kendall:  Esta prueba, que es no paramétrica, evalúa la presencia de tendencias monótonas a lo largo del tiempo en la serie de tiempo. Una serie que exhibe estacionalidad a menudo carecerá de una tendencia monótona clara.
+
+3. Análisis de autocorrelación: Al calcular la autocorrelación de la serie de tiempo en diferentes rezagos, se puede determinar si existen autocorrelaciones significativas en los rezagos que están relacionados con la longitud de la estacionalidad supuesta. Como pudimos observar en el análisis de rezago, existen autocorrelaciones significativas en algunos rezagos que podrían indicarnos una estacionalidad anual.Como observamos en el análisis de rezagos, hemos identificado autocorrelaciones significativas en ciertos rezagos. Estas observaciones sugieren la posibilidad de una estacionalidad anual en los datos.
+
+4. Pruebas de estacionalidad de Box-Pierce o Ljung-Box: Estas pruebas se utiliza para evaluar si hay autocorrelaciones significativas en la serie después de eliminar cualquier componente de tendencia y estacionalidad. Si hay autocorrelaciones significativas en los rezagos que corresponden a la estacionalidad, esto puede indicar la presencia de estacionalidad en la serie.
+
+5. Descomposición estacional: Mediante técnicas de descomposición de series de tiempo, es posible separar los componentes de tendencia, estacionalidad y aleatoriedad. Si la componente estacional es notable en comparación con los otros componentes, esto puede indicar la presencia de estacionalidad en la serie.
+
+### Prueba de kendall
+
+```{r}
+# Prueba de Kendall
+test_kendall <- MannKendall(ts_data)
+print(test_kendall)
+```
+
+* El resultado de la prueba muestra un valor de tau de 0.146 y un p-valor menor a 0.05. Esto indica que hay evidencia significativa para rechazar la hipótesis nula de ausencia de estacionalidad en la serie de tiempo. Es decir, se sugiere la presencia de una tendencia monotónica en los datos, lo que podría ser indicativo de estacionalidad.
+
+* Retomando el análisis grafico que se ha venido haciendo y de rezago, se puede comprobar visualmente que la serie presenta un comportamiento estacional cada año.
+
 # Análisis Exploratorio de Datos (EDA): Descomposición, Estacionariedad y la Diferenciación
 
 En esta sección, proporcionaremos una vista general de los datos utilizando la evaluaciòn de la descomposición, estacionariedad y la diferenciación.
@@ -205,6 +233,36 @@ Concluyendo, empleamos la función ndiffs para determinar el número óptimo de 
 
 ```{r}
 # Número de diferenciaciones
-
 ndiffs(ts_data)
 ```
+
+## Diferenciación
+
+La diferenciación puede ayudar a estabilizar la media de una serie de tiempo al eliminar los cambios en el nivel de una serie de tiempo y, por lo tanto, eliminar (o reducir) la tendencia . Considerando las observaciones previas que indican que la serie temporal de temperatura no es estacionaria, se recurre a la diferenciación con el fin de lograr esta estacionariedad deseada.
+
+Antes de aplicar la diferenciación, es importante tener en cuenta el número óptimo de diferenciaciones previamente determinado, que en este caso es uno. Por lo tanto, se procede a diferenciar la serie temporal una sola vez y se genera una nueva descomposición para evaluar nuevamente la estacionalidad y la tendencia en la serie diferenciada.
+
+```{r}
+sdif<- diff(ts_data, lag = 30)
+descom <- decompose(sdif)
+plot(descom)
+```
+
+* Para mantener la estacionalidad y al mismo tiempo reducir la tendencia, con el fin de lograr una serie estacionaria y estacional, se exploraron diferentes valores de lag para encontrar el intervalo de resta de datos que mejor se adaptara a este propósito.
+
+* Aunque se presentan fluctuaciones alrededor de un nivel constante a lo largo del tiempo, ya no se percibe una tendencia claramente definida de crecimiento.
+
+* Aunque la estacionalidad ya no es tan marcada, todavía se mantiene presente en la serie temporal, y además, comienza a hacerse evidente que la serie ya se puede empezar a considerar estacionaria. 
+
+### Prueba de Dickey-Fuller para la serie diferenciada
+
+```{r}
+# 2. Prueba de raíz unitaria (ADF)
+
+prueba <- adf.test(sdif)
+
+print(prueba)
+```
+
+* Se observa que el valor p es 0.02. Aunque sigue siendo mayor que el nivel de significancia de 0.05, es significativamente menor que el valor p obtenido en la serie sin la diferenciación implementada. Esto sugiere que es menos probable que la serie de tiempo tenga una raíz unitaria, lo que indica una mayor posibilidad de estacionariedad en la serie diferenciada.
+

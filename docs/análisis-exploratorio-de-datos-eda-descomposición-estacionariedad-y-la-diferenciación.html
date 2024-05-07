@@ -157,6 +157,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.5.1" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#calcular-la-autocorrelación"><i class="fa fa-check"></i><b>2.5.1</b> Calcular la autocorrelación</a></li>
 </ul></li>
+<li class="chapter" data-level="2.6" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#estacionalidad"><i class="fa fa-check"></i><b>2.6</b> Estacionalidad</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#prueba-de-kendall"><i class="fa fa-check"></i><b>2.6.1</b> Prueba de kendall</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><i class="fa fa-check"></i><b>3</b> Análisis Exploratorio de Datos (EDA): Descomposición, Estacionariedad y la Diferenciación</a>
 <ul>
@@ -164,6 +168,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#estacionariedad"><i class="fa fa-check"></i><b>3.2</b> Estacionariedad</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#verificar-si-la-serie-de-temperatura-es-estacionaria"><i class="fa fa-check"></i><b>3.2.1</b> Verificar si la serie de temperatura es estacionaria</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#diferenciación"><i class="fa fa-check"></i><b>3.3</b> Diferenciación</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#prueba-de-dickey-fuller-para-la-serie-diferenciada"><i class="fa fa-check"></i><b>3.3.1</b> Prueba de Dickey-Fuller para la serie diferenciada</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -192,10 +200,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="descomposición" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Descomposición<a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#descomposición" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>La descomposición de series de tiempo es una técnica esencial en el análisis de datos temporales, permitiendo desglosar una serie en sus componentes principales: tendencia, estacionalidad y ruido. Al aplicar esta técnica a la serie temporal de temperatura, se revela el comportamiento estacional observado previamente, así como la tendencia y la componente de ruido de manera detallada. Esta última representa la variabilidad aleatoria o irregular que no puede atribuirse a la tendencia ni a la estacionalidad previamente identificadas.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb11-1" tabindex="-1"></a>descomposicion <span class="ot">&lt;-</span> <span class="fu">decompose</span>(ts_data)</span>
-<span id="cb11-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb11-2" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb11-3" tabindex="-1"></a><span class="fu">plot</span>(descomposicion)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb13-1" tabindex="-1"></a>descomposicion <span class="ot">&lt;-</span> <span class="fu">decompose</span>(ts_data)</span>
+<span id="cb13-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb13-3" tabindex="-1"></a><span class="fu">plot</span>(descomposicion)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>En las graficas anteriores se observa lo siqguiente:</p>
 <ul>
 <li><p>La tendencia de la serie temporal indica un aumento gradual en las temperaturas a lo largo del tiempo, aunque inicialmente este incremento puede parecer moderado o bastante lento. Sin embargo, en los últimos dos años se ha observado un incremento más pronunciado, sugiriendo que el calentamiento global podría estar acelerándose. y esperando ese posible comportamiento al aumento en proximos años.</p></li>
@@ -227,11 +235,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="prueba-de-dickey-fuller" class="section level4 hasAnchor" number="3.2.1.2">
 <h4><span class="header-section-number">3.2.1.2</span> Prueba de Dickey-Fuller<a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#prueba-de-dickey-fuller" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb12-1" tabindex="-1"></a><span class="co"># 2. Prueba de raíz unitaria (ADF)</span></span>
-<span id="cb12-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb12-2" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb12-3" tabindex="-1"></a>prueba_adf <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(ts_data)</span>
-<span id="cb12-4"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb12-4" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb12-5" tabindex="-1"></a><span class="fu">print</span>(prueba_adf)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb14-1" tabindex="-1"></a><span class="co"># 2. Prueba de raíz unitaria (ADF)</span></span>
+<span id="cb14-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb14-2" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb14-3" tabindex="-1"></a>prueba_adf <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(ts_data)</span>
+<span id="cb14-4"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb14-4" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb14-5" tabindex="-1"></a><span class="fu">print</span>(prueba_adf)</span></code></pre></div>
 <pre><code>## 
 ##  Augmented Dickey-Fuller Test
 ## 
@@ -242,12 +250,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Debido a que el valor p (0.3) es superior al nivel de significancia de 0.05, se sugiere que la serie de tiempo posiblemente contiene una raíz unitaria y, por ende, no es estacionaria.</li>
 </ul>
 <p>Concluyendo, empleamos la función ndiffs para determinar el número óptimo de diferenciaciones necesario para hacer que la serie de tiempo sea estacionaria. El objetivo es identificar el mínimo número de diferenciaciones requeridas para eliminar tanto la tendencia como la estacionalidad de la serie.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb14-1" tabindex="-1"></a><span class="co"># Número de diferenciaciones</span></span>
-<span id="cb14-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb14-2" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb14-3" tabindex="-1"></a><span class="fu">ndiffs</span>(ts_data)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb16-1" tabindex="-1"></a><span class="co"># Número de diferenciaciones</span></span>
+<span id="cb16-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb16-2" tabindex="-1"></a><span class="fu">ndiffs</span>(ts_data)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-
 </div>
+</div>
+</div>
+<div id="diferenciación" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Diferenciación<a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#diferenciación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La diferenciación puede ayudar a estabilizar la media de una serie de tiempo al eliminar los cambios en el nivel de una serie de tiempo y, por lo tanto, eliminar (o reducir) la tendencia . Considerando las observaciones previas que indican que la serie temporal de temperatura no es estacionaria, se recurre a la diferenciación con el fin de lograr esta estacionariedad deseada.</p>
+<p>Antes de aplicar la diferenciación, es importante tener en cuenta el número óptimo de diferenciaciones previamente determinado, que en este caso es uno. Por lo tanto, se procede a diferenciar la serie temporal una sola vez y se genera una nueva descomposición para evaluar nuevamente la estacionalidad y la tendencia en la serie diferenciada.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-1" tabindex="-1"></a>sdif<span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_data, <span class="at">lag =</span> <span class="dv">30</span>)</span>
+<span id="cb18-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-2" tabindex="-1"></a>descom <span class="ot">&lt;-</span> <span class="fu">decompose</span>(sdif)</span>
+<span id="cb18-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-3" tabindex="-1"></a><span class="fu">plot</span>(descom)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<ul>
+<li><p>Para mantener la estacionalidad y al mismo tiempo reducir la tendencia, con el fin de lograr una serie estacionaria y estacional, se exploraron diferentes valores de lag para encontrar el intervalo de resta de datos que mejor se adaptara a este propósito.</p></li>
+<li><p>Aunque se presentan fluctuaciones alrededor de un nivel constante a lo largo del tiempo, ya no se percibe una tendencia claramente definida de crecimiento.</p></li>
+<li><p>Aunque la estacionalidad ya no es tan marcada, todavía se mantiene presente en la serie temporal, y además, comienza a hacerse evidente que la serie ya se puede empezar a considerar estacionaria.</p></li>
+</ul>
+<div id="prueba-de-dickey-fuller-para-la-serie-diferenciada" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Prueba de Dickey-Fuller para la serie diferenciada<a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#prueba-de-dickey-fuller-para-la-serie-diferenciada" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-1" tabindex="-1"></a><span class="co"># 2. Prueba de raíz unitaria (ADF)</span></span>
+<span id="cb19-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-2" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-3" tabindex="-1"></a>prueba <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(sdif)</span>
+<span id="cb19-4"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-4" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-5" tabindex="-1"></a><span class="fu">print</span>(prueba)</span></code></pre></div>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  sdif
+## Dickey-Fuller = -3.6338, Lag order = 11, p-value = 0.02942
+## alternative hypothesis: stationary</code></pre>
+<ul>
+<li>Se observa que el valor p es 0.02. Aunque sigue siendo mayor que el nivel de significancia de 0.05, es significativamente menor que el valor p obtenido en la serie sin la diferenciación implementada. Esto sugiere que es menos probable que la serie de tiempo tenga una raíz unitaria, lo que indica una mayor posibilidad de estacionariedad en la serie diferenciada.</li>
+</ul>
+
 </div>
 </div>
 </div>
