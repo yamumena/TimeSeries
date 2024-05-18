@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Holt Winters | Series de Tiempo Actividad 1</title>
+  <meta name="description" content="4 Holt Winters | Series de Tiempo Actividad 1" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Holt Winters | Series de Tiempo Actividad 1" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Holt Winters | Series de Tiempo Actividad 1" />
+  
+  
+  
+
+<meta name="author" content="Grupo 5:" />
+<meta name="author" content="Yamuna Mena Ramirez" />
+<meta name="author" content="Angelica Forero Artunduaga" />
+<meta name="author" content="Leidy Conde Chavarro" />
+
+
+<meta name="date" content="2024-05-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"/>
+<link rel="next" href="metodología-box-jenkins-y-modelo-arima.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Selección de la base de datos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#selección-de-la-variable-temperatura"><i class="fa fa-check"></i><b>1.1</b> Selección de la Variable <strong>Temperatura</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><i class="fa fa-check"></i><b>2</b> Análisis Exploratorio de Datos (EDA): Promedio Móvil, Rezagos y Estacionalidad</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#carga-de-datos"><i class="fa fa-check"></i><b>2.1</b> Carga de datos</a></li>
+<li class="chapter" data-level="2.2" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#resumen-general-de-la-serie-temporal"><i class="fa fa-check"></i><b>2.2</b> Resumen general de la serie temporal</a></li>
+<li class="chapter" data-level="2.3" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#visualización-de-la-serie-temporal"><i class="fa fa-check"></i><b>2.3</b> Visualización de la serie temporal</a></li>
+<li class="chapter" data-level="2.4" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#media-movil"><i class="fa fa-check"></i><b>2.4</b> Media movil</a></li>
+<li class="chapter" data-level="2.5" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#rezago"><i class="fa fa-check"></i><b>2.5</b> Rezago</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#calcular-la-autocorrelación"><i class="fa fa-check"></i><b>2.5.1</b> Calcular la autocorrelación</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#estacionalidad"><i class="fa fa-check"></i><b>2.6</b> Estacionalidad</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"><a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html#prueba-de-kendall"><i class="fa fa-check"></i><b>2.6.1</b> Prueba de kendall</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><i class="fa fa-check"></i><b>3</b> Análisis Exploratorio de Datos (EDA): Descomposición, Estacionariedad y la Diferenciación</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#descomposición"><i class="fa fa-check"></i><b>3.1</b> Descomposición</a></li>
+<li class="chapter" data-level="3.2" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#estacionariedad"><i class="fa fa-check"></i><b>3.2</b> Estacionariedad</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#verificar-si-la-serie-de-temperatura-es-estacionaria"><i class="fa fa-check"></i><b>3.2.1</b> Verificar si la serie de temperatura es estacionaria</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#diferenciación"><i class="fa fa-check"></i><b>3.3</b> Diferenciación</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#prueba-de-dickey-fuller-para-la-serie-diferenciada"><i class="fa fa-check"></i><b>3.3.1</b> Prueba de Dickey-Fuller para la serie diferenciada</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="holt-winters.html"><a href="holt-winters.html"><i class="fa fa-check"></i><b>4</b> Holt Winters</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="holt-winters.html"><a href="holt-winters.html#validación-del-método-holt-winters"><i class="fa fa-check"></i><b>4.1</b> Validación del método Holt-Winters</a></li>
+<li class="chapter" data-level="4.2" data-path="holt-winters.html"><a href="holt-winters.html#aplicación"><i class="fa fa-check"></i><b>4.2</b> Aplicación</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="holt-winters.html"><a href="holt-winters.html#optimizar-parámetros"><i class="fa fa-check"></i><b>4.2.1</b> Optimizar parámetros</a></li>
+<li class="chapter" data-level="4.2.2" data-path="holt-winters.html"><a href="holt-winters.html#modelo-holt-winters"><i class="fa fa-check"></i><b>4.2.2</b> Modelo Holt-Winters</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="holt-winters.html"><a href="holt-winters.html#predicciones"><i class="fa fa-check"></i><b>4.3</b> Predicciones</a></li>
+<li class="chapter" data-level="4.4" data-path="holt-winters.html"><a href="holt-winters.html#evaluación-del-modelo"><i class="fa fa-check"></i><b>4.4</b> Evaluación del modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="metodología-box-jenkins-y-modelo-arima.html"><a href="metodología-box-jenkins-y-modelo-arima.html"><i class="fa fa-check"></i><b>5</b> Metodología Box-Jenkins y Modelo ARIMA</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="metodología-box-jenkins-y-modelo-arima.html"><a href="metodología-box-jenkins-y-modelo-arima.html#modelo-arima"><i class="fa fa-check"></i><b>5.1</b> Modelo ARIMA</a></li>
+<li class="chapter" data-level="5.2" data-path="metodología-box-jenkins-y-modelo-arima.html"><a href="metodología-box-jenkins-y-modelo-arima.html#metodología-box-jenkins"><i class="fa fa-check"></i><b>5.2</b> Metodología Box-Jenkins</a></li>
+<li class="chapter" data-level="5.3" data-path="metodología-box-jenkins-y-modelo-arima.html"><a href="metodología-box-jenkins-y-modelo-arima.html#aplicación-1"><i class="fa fa-check"></i><b>5.3</b> Aplicación</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de Tiempo Actividad 1</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="holt-winters" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Holt Winters<a href="holt-winters.html#holt-winters" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>El método de Holt-Winters es una técnica de pronóstico ampliamente utilizada en análisis de series temporales que aborda la complejidad de los datos con componentes de nivel, tendencia y estacionalidad. Al incorporar tres parámetros principales -alfa (α), beta (β) y gamma (γ)-, el modelo de Holt-Winters realiza un triple suavizado exponencial que permite adaptarse de manera dinámica a medida que nuevos datos se van incorporando.</p>
+<p>El parámetro alfa (α) controla el suavizado del componente de nivel, mientras que el beta (β) influye en el suavizado de la tendencia y el gamma (γ) determina el suavizado de la estacionalidad. Estos parámetros son cruciales para establecer cómo se ponderan y suavizan las diferentes componentes de la serie temporal, permitiendo que el modelo capture eficazmente las variaciones en los datos a lo largo del tiempo.</p>
+<p>Además de estos parámetros, el método de Holt-Winters también considera la longitud de la estacionalidad (m), que indica la cantidad de períodos en un ciclo estacional completo, mejorando así la capacidad del modelo para modelar y prever patrones estacionales en los datos.</p>
+<p>Aunque el modelo de Holt-Winters es capaz de modelar la mayoría de las características de una serie temporal, siempre habrá variaciones residuales no sistemáticas o ruido que no pueden ser explicadas por el modelo. Estos residuos son una parte natural de cualquier serie temporal y deben ser evaluados para comprender la precisión y las limitaciones del modelo.</p>
+<div id="validación-del-método-holt-winters" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Validación del método Holt-Winters<a href="holt-winters.html#validación-del-método-holt-winters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para aplicar con éxito el método de Holt-Winters a esta serie de tiempo, es fundamental verificar varios aspectos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Componentes de la serie: Es imprescindible que nuestra serie exhiba al menos dos de las tres componentes principales: nivel, tendencia y estacionalidad. Tras un análisis previo, hemos identificado tanto la tendencia como la estacionalidad en nuestra serie temporal.</p></li>
+<li><p>Patrones estacionales: Hemos confirmado la presencia de estacionalidad en nuestra serie mediante la prueba de Kendall, observamos patrones claros y repetitivos al graficar los datos, particularmente en ciclos anuales y de forma aditiva.</p></li>
+<li><p>Estabilidad y regularidad: Nuestra serie temporal muestra un nivel adecuado de estabilidad y regularidad a lo largo del tiempo, sin exhibir variaciones extremas o fluctuaciones erráticas.</p></li>
+<li><p>Cantidad de datos disponibles: Contamos con una cantidad suficiente de datos para aplicar el método de Holt-Winters. Nuestra serie temporal abarca 1576 registros desde el año 2013 hasta el 2017, con una frecuencia diaria.</p></li>
+<li><p>Datos completos: La serie temporal no presenta valores faltantes; cada uno de los 1576 registros diarios contiene información válida.</p></li>
+<li><p>Estacionariedad: Aunque inicialmente nuestra serie no era estacionaria según el test de Dickey-Fuller, aplicamos una diferenciación una sola vez para estabilizar la media mientras manteníamos la estacionalidad y la tendencia.</p></li>
+</ol>
+<p>Teniendo en cuenta estos puntos, nuestra serie de tiempo parece adecuada para aplicar el método de Holt-Winters y realizar un análisis detallado.</p>
+</div>
+<div id="aplicación" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Aplicación<a href="holt-winters.html#aplicación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Como se mencionó anteriormente, el método de Holt-Winters cuenta con varios parámetros que influyen en su desempeño. Si bien se podria aplicar el método directamente a nuestra serie temporal utilizando la función HoltWinters con los parámetros predeterminados, en nuestro caso optaremos por otra estrategia. Desarrollaremos una función que nos ayude a identificar los valores óptimos de los parámetros, con el objetivo de minimizar el error en nuestras predicciones. Es importante considerar que estos parámetros pueden variar en un rango de 0 a 1.</p>
+<div id="optimizar-parámetros" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Optimizar parámetros<a href="holt-winters.html#optimizar-parámetros" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="holt-winters.html#cb21-1" tabindex="-1"></a><span class="co"># La función toma dos argumentos: un vector que contiene los parámetros alfa, beta y gamma, y la serie de tiempo para la cual queremos calcular el error.</span></span>
+<span id="cb21-2"><a href="holt-winters.html#cb21-2" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="holt-winters.html#cb21-3" tabindex="-1"></a>error_func <span class="ot">&lt;-</span> <span class="cf">function</span>(params, serie_tiempo) {</span>
+<span id="cb21-4"><a href="holt-winters.html#cb21-4" tabindex="-1"></a>  alpha <span class="ot">&lt;-</span> params[<span class="dv">1</span>]</span>
+<span id="cb21-5"><a href="holt-winters.html#cb21-5" tabindex="-1"></a>  beta <span class="ot">&lt;-</span> params[<span class="dv">2</span>]</span>
+<span id="cb21-6"><a href="holt-winters.html#cb21-6" tabindex="-1"></a>  gamma <span class="ot">&lt;-</span> params[<span class="dv">3</span>]</span>
+<span id="cb21-7"><a href="holt-winters.html#cb21-7" tabindex="-1"></a>  </span>
+<span id="cb21-8"><a href="holt-winters.html#cb21-8" tabindex="-1"></a>  <span class="co"># Ajusta el modelo Holt-Winters</span></span>
+<span id="cb21-9"><a href="holt-winters.html#cb21-9" tabindex="-1"></a>  hw_model <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(serie_tiempo, <span class="at">alpha =</span> alpha, <span class="at">beta =</span> beta, <span class="at">gamma =</span> gamma)</span>
+<span id="cb21-10"><a href="holt-winters.html#cb21-10" tabindex="-1"></a>  </span>
+<span id="cb21-11"><a href="holt-winters.html#cb21-11" tabindex="-1"></a>  <span class="co"># Calcula el error cuadrático total</span></span>
+<span id="cb21-12"><a href="holt-winters.html#cb21-12" tabindex="-1"></a>  error <span class="ot">&lt;-</span> <span class="fu">sum</span>((serie_tiempo <span class="sc">-</span> <span class="fu">fitted</span>(hw_model))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb21-13"><a href="holt-winters.html#cb21-13" tabindex="-1"></a>  </span>
+<span id="cb21-14"><a href="holt-winters.html#cb21-14" tabindex="-1"></a>  <span class="fu">return</span>(error)</span>
+<span id="cb21-15"><a href="holt-winters.html#cb21-15" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="holt-winters.html#cb22-1" tabindex="-1"></a><span class="co"># En primer lugar definimos el rango para los parámetros alpha, beta y gamma.</span></span>
+<span id="cb22-2"><a href="holt-winters.html#cb22-2" tabindex="-1"></a>lim_inf <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb22-3"><a href="holt-winters.html#cb22-3" tabindex="-1"></a>lim_sup <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="holt-winters.html#cb23-1" tabindex="-1"></a><span class="co"># Se utiliza la función &quot;optim&quot; para encontrar los valores óptimos de los parámetros alpha, beta y gamma, utilizando el método &quot;L-BFGS-B&quot; que es uno de los métodos disponibles en R para la optimización con restricciones.</span></span>
+<span id="cb23-2"><a href="holt-winters.html#cb23-2" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="holt-winters.html#cb23-3" tabindex="-1"></a>optimizacion <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), error_func, <span class="at">serie_tiempo =</span> ts_data_dif, <span class="at">lower =</span> lim_inf, <span class="at">upper =</span> lim_sup,  <span class="at">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="holt-winters.html#cb24-1" tabindex="-1"></a><span class="co"># Obtiene los valores óptimos de los parámetros</span></span>
+<span id="cb24-2"><a href="holt-winters.html#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="holt-winters.html#cb24-3" tabindex="-1"></a>parametros <span class="ot">&lt;-</span> optimizacion<span class="sc">$</span>par</span>
+<span id="cb24-4"><a href="holt-winters.html#cb24-4" tabindex="-1"></a><span class="fu">print</span>(parametros)</span></code></pre></div>
+<pre><code>## [1] 0.3751881 0.0000000 0.5873382</code></pre>
+<p>Como podemos evidenciar los valores óptimos son:</p>
+<ol style="list-style-type: decimal">
+<li><p>Alpha = 0.42. Indica que se le da más peso a las observaciones recientes para la estimación del nivel.</p></li>
+<li><p>Beta = 0.00. Indica que no se está considerando la componente de tendencia en el modelo Holt-Winters.</p></li>
+<li><p>Gamma 0.73. Indica que se da un peso significativo a las observaciones recientes para la estimación de la estacionalidad.</p></li>
+</ol>
+</div>
+<div id="modelo-holt-winters" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Modelo Holt-Winters<a href="holt-winters.html#modelo-holt-winters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="holt-winters.html#cb26-1" tabindex="-1"></a><span class="co"># Ajustar el modelo HoltWinters con los parámetros definidos anteriormente.</span></span>
+<span id="cb26-2"><a href="holt-winters.html#cb26-2" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="holt-winters.html#cb26-3" tabindex="-1"></a>hw_model <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(ts_data_dif, <span class="at">alpha =</span> parametros[<span class="dv">1</span>], <span class="at">beta =</span> parametros[<span class="dv">2</span>], <span class="at">gamma =</span> parametros[<span class="dv">3</span>])</span>
+<span id="cb26-4"><a href="holt-winters.html#cb26-4" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="holt-winters.html#cb26-5" tabindex="-1"></a><span class="fu">plot</span>(hw_model)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<ul>
+<li>Como podemos observar, parece que el modelo se ajusta bien a nuestra serie temporal, capturando tanto la tendencia como la estacionalidad. No obstante, más adelante evaluaremos a fondo nuestro modelo.</li>
+</ul>
+</div>
+</div>
+<div id="predicciones" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Predicciones<a href="holt-winters.html#predicciones" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para realizar predicciones, utilizaremos tanto la función predict como forecast, y analizaremos las diferencias entre ellas.</p>
+<p>Empleamos la función predict para generar predicciones para los próximos 360 pasos (días, apro un año) en el tiempo, e incluimos intervalos de predicción con un nivel de confianza del 95%.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="holt-winters.html#cb27-1" tabindex="-1"></a>predicciones <span class="ot">&lt;-</span> <span class="fu">predict</span>(hw_model, <span class="at">n.ahead =</span> <span class="dv">360</span>, <span class="at">prediction.interval =</span> <span class="cn">TRUE</span>, <span class="at">level=</span><span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="holt-winters.html#cb28-1" tabindex="-1"></a><span class="co"># Visualizar las predicciones</span></span>
+<span id="cb28-2"><a href="holt-winters.html#cb28-2" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="holt-winters.html#cb28-3" tabindex="-1"></a><span class="fu">plot</span>(ts_data_dif, <span class="at">main =</span> <span class="st">&quot;Predicciones Holt-Winters&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Tiempo&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Temperatura&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2014</span>, <span class="dv">2019</span>))</span>
+<span id="cb28-4"><a href="holt-winters.html#cb28-4" tabindex="-1"></a><span class="fu">lines</span>(hw_model<span class="sc">$</span>fitted[,<span class="dv">1</span>], <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb28-5"><a href="holt-winters.html#cb28-5" tabindex="-1"></a><span class="fu">lines</span>(predicciones[,<span class="dv">1</span>], <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb28-6"><a href="holt-winters.html#cb28-6" tabindex="-1"></a><span class="fu">lines</span>(predicciones[,<span class="dv">2</span>], <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;orange&quot;</span>)</span>
+<span id="cb28-7"><a href="holt-winters.html#cb28-7" tabindex="-1"></a><span class="fu">lines</span>(predicciones[,<span class="dv">3</span>], <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;orange&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<ul>
+<li><p>Como se indica, las líneas negras representan los datos de nuestra serie temporal. Las líneas azules representan el modelo ajustado. Las líneas rojas representan las predicciones para los próximos 30 días. Las líneas naranjas representan los intervalos de confianza asociados con estas predicciones. Como se puede observar, los intervalos se desbordan, lo que indica una alta incertidumbre en nuestras predicciones.</p></li>
+<li><p>A pesar de que a partir d elos intervalos se observa una alta incertidumbre, el año que fue pronosticado parece estar ajustado siguiendo la estacionalidad que hubo en los años conocidos.</p></li>
+</ul>
+<p>Utilizando la función forecast, se generan predicciones de nuestro modelo Holt-Winters con niveles de confianza del 80% y del 95%.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="holt-winters.html#cb29-1" tabindex="-1"></a>hw_forecast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(hw_model,<span class="at">level=</span><span class="fu">c</span>(<span class="dv">80</span>,<span class="dv">95</span>))</span>
+<span id="cb29-2"><a href="holt-winters.html#cb29-2" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="holt-winters.html#cb29-3" tabindex="-1"></a><span class="co"># Visualizar las predicciones</span></span>
+<span id="cb29-4"><a href="holt-winters.html#cb29-4" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="holt-winters.html#cb29-5" tabindex="-1"></a><span class="fu">plot</span>(hw_forecast, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2014</span>, <span class="dv">2018</span>))</span>
+<span id="cb29-6"><a href="holt-winters.html#cb29-6" tabindex="-1"></a><span class="fu">lines</span>(hw_forecast<span class="sc">$</span>fitted, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;purple&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<ul>
+<li>Como podemos observar, la predicción con la función forecast parece ser bastante similar al resultado anterior. En este caso, es más fácil notar cómo los intervalos de confianza se desbordan.</li>
+</ul>
+</div>
+<div id="evaluación-del-modelo" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Evaluación del modelo<a href="holt-winters.html#evaluación-del-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La librería forecast también evalúa la calidad de nuestras predicciones al calcular la diferencia entre los valores observados y los valores predichos para cada punto de datos. Estos residuos se incorporan a nuestro modelo de pronóstico como $residuals. Nuestro objetivo es verificar la ausencia de correlaciones entre los errores de pronóstico.Para evaluar esto, utilizamos la función acf para analizar la correlación de los residuos entre puntos separados en el tiempo.</p>
+<p>Además, la prueba de Ljung-Box puede proporcionar información sobre estas correlaciones. Un valor p mayor que 0.05 indica una probabilidad del 95% de que los residuos sean independientes.</p>
+<p>Finalmente, es útil examinar el histograma de los residuos para verificar su distribución. Si los residuos están notablemente sesgados, es posible que nuestro modelo esté consistentemente sobrestimando o subestimando en una dirección específica.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="holt-winters.html#cb30-1" tabindex="-1"></a><span class="fu">acf</span>(hw_forecast<span class="sc">$</span>residuals, <span class="at">lag.max=</span><span class="dv">30</span>, <span class="at">na.action=</span>na.pass)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="holt-winters.html#cb31-1" tabindex="-1"></a><span class="fu">Box.test</span>(hw_forecast<span class="sc">$</span>residuals,  <span class="at">type=</span><span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Box-Ljung test
+## 
+## data:  hw_forecast$residuals
+## X-squared = 170.64, df = 1, p-value &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="holt-winters.html#cb33-1" tabindex="-1"></a><span class="fu">hist</span>(hw_forecast<span class="sc">$</span>residuals)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<ul>
+<li>De acuerdo a los resultados obtenidos mediante el análisis de la función acf, la prueba de Ljung-Box y el histograma, se evidencia la presencia de autocorrelación significativa en los residuos del modelo Holt-Winters. Esto sugiere que el modelo podría no estar capturando completamente la estructura temporal de los datos y podría necesitar ajustes o mejoras adicionales.</li>
+</ul>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="metodología-box-jenkins-y-modelo-arima.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

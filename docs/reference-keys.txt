@@ -17,3 +17,15 @@ diferenciación
 estacionalidad
 prueba-de-kendall
 prueba-de-dickey-fuller-para-la-serie-diferenciada
+holt-winters
+validación-del-método-holt-winters
+aplicación
+optimizar-parámetros
+modelo-holt-winters
+predicciones
+evaluación-del-modelo
+metodología-box-jenkins-y-modelo-arima
+modelo-arima
+esquema-box-jenkins
+metodología-box-jenkins
+aplicación-1

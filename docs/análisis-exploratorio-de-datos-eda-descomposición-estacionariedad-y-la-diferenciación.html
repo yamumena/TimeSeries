@@ -26,7 +26,7 @@
 <meta name="author" content="Leidy Conde Chavarro" />
 
 
-<meta name="date" content="2024-05-06" />
+<meta name="date" content="2024-05-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,7 +34,7 @@
   
   
 <link rel="prev" href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html"/>
-
+<link rel="next" href="holt-winters.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -174,6 +174,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.1" data-path="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#prueba-de-dickey-fuller-para-la-serie-diferenciada"><i class="fa fa-check"></i><b>3.3.1</b> Prueba de Dickey-Fuller para la serie diferenciada</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="holt-winters.html"><a href="holt-winters.html"><i class="fa fa-check"></i><b>4</b> Holt Winters</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="holt-winters.html"><a href="holt-winters.html#validación-del-método-holt-winters"><i class="fa fa-check"></i><b>4.1</b> Validación del método Holt-Winters</a></li>
+<li class="chapter" data-level="4.2" data-path="holt-winters.html"><a href="holt-winters.html#aplicación"><i class="fa fa-check"></i><b>4.2</b> Aplicación</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="holt-winters.html"><a href="holt-winters.html#optimizar-parámetros"><i class="fa fa-check"></i><b>4.2.1</b> Optimizar parámetros</a></li>
+<li class="chapter" data-level="4.2.2" data-path="holt-winters.html"><a href="holt-winters.html#modelo-holt-winters"><i class="fa fa-check"></i><b>4.2.2</b> Modelo Holt-Winters</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="holt-winters.html"><a href="holt-winters.html#predicciones"><i class="fa fa-check"></i><b>4.3</b> Predicciones</a></li>
+<li class="chapter" data-level="4.4" data-path="holt-winters.html"><a href="holt-winters.html#evaluación-del-modelo"><i class="fa fa-check"></i><b>4.4</b> Evaluación del modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="metodología-box-jenkins-y-modelo-arima.html"><a href="metodología-box-jenkins-y-modelo-arima.html"><i class="fa fa-check"></i><b>5</b> Metodología Box-Jenkins y Modelo ARIMA</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="metodología-box-jenkins-y-modelo-arima.html"><a href="metodología-box-jenkins-y-modelo-arima.html#modelo-arima"><i class="fa fa-check"></i><b>5.1</b> Modelo ARIMA</a></li>
+<li class="chapter" data-level="5.2" data-path="metodología-box-jenkins-y-modelo-arima.html"><a href="metodología-box-jenkins-y-modelo-arima.html#metodología-box-jenkins"><i class="fa fa-check"></i><b>5.2</b> Metodología Box-Jenkins</a></li>
+<li class="chapter" data-level="5.3" data-path="metodología-box-jenkins-y-modelo-arima.html"><a href="metodología-box-jenkins-y-modelo-arima.html#aplicación-1"><i class="fa fa-check"></i><b>5.3</b> Aplicación</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -247,7 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Dickey-Fuller = -2.0596, Lag order = 11, p-value = 0.5531
 ## alternative hypothesis: stationary</code></pre>
 <ul>
-<li>Debido a que el valor p (0.3) es superior al nivel de significancia de 0.05, se sugiere que la serie de tiempo posiblemente contiene una raíz unitaria y, por ende, no es estacionaria.</li>
+<li>Debido a que el valor p (0.55) es superior al nivel de significancia de 0.05, se sugiere que la serie de tiempo posiblemente contiene una raíz unitaria y, por ende, no es estacionaria.</li>
 </ul>
 <p>Concluyendo, empleamos la función ndiffs para determinar el número óptimo de diferenciaciones necesario para hacer que la serie de tiempo sea estacionaria. El objetivo es identificar el mínimo número de diferenciaciones requeridas para eliminar tanto la tendencia como la estacionalidad de la serie.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb16-1" tabindex="-1"></a><span class="co"># Número de diferenciaciones</span></span>
@@ -260,8 +277,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.3</span> Diferenciación<a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#diferenciación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>La diferenciación puede ayudar a estabilizar la media de una serie de tiempo al eliminar los cambios en el nivel de una serie de tiempo y, por lo tanto, eliminar (o reducir) la tendencia . Considerando las observaciones previas que indican que la serie temporal de temperatura no es estacionaria, se recurre a la diferenciación con el fin de lograr esta estacionariedad deseada.</p>
 <p>Antes de aplicar la diferenciación, es importante tener en cuenta el número óptimo de diferenciaciones previamente determinado, que en este caso es uno. Por lo tanto, se procede a diferenciar la serie temporal una sola vez y se genera una nueva descomposición para evaluar nuevamente la estacionalidad y la tendencia en la serie diferenciada.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-1" tabindex="-1"></a>sdif<span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_data, <span class="at">lag =</span> <span class="dv">30</span>)</span>
-<span id="cb18-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-2" tabindex="-1"></a>descom <span class="ot">&lt;-</span> <span class="fu">decompose</span>(sdif)</span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-1" tabindex="-1"></a>ts_data_dif<span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_data, <span class="at">lag =</span> <span class="dv">30</span>)</span>
+<span id="cb18-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-2" tabindex="-1"></a>descom <span class="ot">&lt;-</span> <span class="fu">decompose</span>(ts_data_dif)</span>
 <span id="cb18-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-3" tabindex="-1"></a><span class="fu">plot</span>(descom)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <ul>
@@ -273,19 +290,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.3.1</span> Prueba de Dickey-Fuller para la serie diferenciada<a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#prueba-de-dickey-fuller-para-la-serie-diferenciada" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-1" tabindex="-1"></a><span class="co"># 2. Prueba de raíz unitaria (ADF)</span></span>
 <span id="cb19-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-2" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-3" tabindex="-1"></a>prueba <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(sdif)</span>
+<span id="cb19-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-3" tabindex="-1"></a>prueba <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(ts_data_dif)</span>
 <span id="cb19-4"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-4" tabindex="-1"></a></span>
 <span id="cb19-5"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-5" tabindex="-1"></a><span class="fu">print</span>(prueba)</span></code></pre></div>
 <pre><code>## 
 ##  Augmented Dickey-Fuller Test
 ## 
-## data:  sdif
+## data:  ts_data_dif
 ## Dickey-Fuller = -3.6338, Lag order = 11, p-value = 0.02942
 ## alternative hypothesis: stationary</code></pre>
 <ul>
-<li>Se observa que el valor p es 0.02. Aunque sigue siendo mayor que el nivel de significancia de 0.05, es significativamente menor que el valor p obtenido en la serie sin la diferenciación implementada. Esto sugiere que es menos probable que la serie de tiempo tenga una raíz unitaria, lo que indica una mayor posibilidad de estacionariedad en la serie diferenciada.</li>
+<li>Se observa que el valor p es 0.02. El cual es menor a el nivel de significancia de 0.05. Esto sugiere que es improbable que la serie de tiempo tenga una raíz unitaria, lo que indica estacionariedad en la serie diferenciada.</li>
 </ul>
-
 </div>
 </div>
 </div>
@@ -294,8 +310,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="análisis-exploratorio-de-datos-eda-promedio-móvil-rezagos-y-estacionalidad.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="holt-winters.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

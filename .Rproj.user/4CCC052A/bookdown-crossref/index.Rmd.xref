@@ -17,4 +17,15 @@ h4:análisis-visual Análisis visual
 h4:prueba-de-dickey-fuller Prueba de Dickey-Fuller
 h2:diferenciación Diferenciación
 h3:prueba-de-dickey-fuller-para-la-serie-diferenciada Prueba de Dickey-Fuller para la serie diferenciada
+h1:holt-winters Holt Winters
+h2:validación-del-método-holt-winters Validación del método Holt-Winters
+h2:aplicación Aplicación
+h3:optimizar-parámetros Optimizar parámetros
+h3:modelo-holt-winters Modelo Holt-Winters
+h2:predicciones Predicciones
+h2:evaluación-del-modelo Evaluación del modelo
+h1:metodología-box-jenkins-y-modelo-arima Metodología Box-Jenkins y Modelo ARIMA
+h2:modelo-arima Modelo ARIMA
+h2:metodología-box-jenkins Metodología Box-Jenkins
+h2:aplicación-1 Aplicación
 
