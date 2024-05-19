@@ -243,16 +243,16 @@ La diferenciación puede ayudar a estabilizar la media de una serie de tiempo al
 Antes de aplicar la diferenciación, es importante tener en cuenta el número óptimo de diferenciaciones previamente determinado, que en este caso es uno. Por lo tanto, se procede a diferenciar la serie temporal una sola vez y se genera una nueva descomposición para evaluar nuevamente la estacionalidad y la tendencia en la serie diferenciada.
 
 ```{r}
-ts_data_dif<- diff(ts_data, lag = 30)
+ts_data_dif<- diff(ts_data, lag = 360)
 descom <- decompose(ts_data_dif)
 plot(descom)
 ```
 
-* Para mantener la estacionalidad y al mismo tiempo reducir la tendencia, con el fin de lograr una serie estacionaria y estacional, se exploraron diferentes valores de lag para encontrar el intervalo de resta de datos que mejor se adaptara a este propósito.
+* Teniendo en cuenta que en la serie hay estacionalidad y al mismo tiempo  tendencia, se realiza una diferenciación con de lag de 360, ya que el periodo estacional se presenta en ese periodo, es decir cada 360 dias.
 
-* Aunque se presentan fluctuaciones alrededor de un nivel constante a lo largo del tiempo, ya no se percibe una tendencia claramente definida de crecimiento.
+* Aunque se presentan fluctuaciones alrededor de un nivel constante a lo largo del tiempo, ya no se percibe una tendencia tan definida de crecimiento.
 
-* Aunque la estacionalidad ya no es tan marcada, todavía se mantiene presente en la serie temporal, y además, comienza a hacerse evidente que la serie ya se puede empezar a considerar estacionaria. 
+* Aunque la estacionalidad ya no es tan marcada, todavía se observa graficamente presente en la serie temporal, y además, comienza a hacerse evidente que la serie ya se puede empezar a considerar estacionaria. 
 
 ### Prueba de Dickey-Fuller para la serie diferenciada
 
@@ -264,7 +264,7 @@ prueba <- adf.test(ts_data_dif)
 print(prueba)
 ```
 
-* Se observa que el valor p es 0.02. El cual es menor a el nivel de significancia de 0.05. Esto sugiere que es improbable que la serie de tiempo tenga una raíz unitaria, lo que indica estacionariedad en la serie diferenciada.
+* Se observa que el valor p es 0.01. El cual es menor a el nivel de significancia de 0.05. Esto sugiere que es improbable que la serie de tiempo tenga una raíz unitaria, lo que indica estacionariedad en la serie diferenciada.
 
 # Holt Winters
 
@@ -342,11 +342,11 @@ print(parametros)
 
 Como podemos evidenciar los valores óptimos son:
 
-1. Alpha = 0.42. Indica que se le da más peso a las observaciones recientes para la estimación del nivel.
+1. Alpha = 0.56. Indica que se le da más peso a las observaciones recientes para la estimación del nivel.
 
 2. Beta = 0.00. Indica que no se está considerando la componente de tendencia en el modelo Holt-Winters.
 
-3. Gamma 0.73. Indica que se da un peso significativo a las observaciones recientes para la estimación de la estacionalidad.
+3. Gamma 0.86. Indica que se da un peso significativo a las observaciones recientes para la estimación de la estacionalidad.
 
 ### Modelo Holt-Winters
 
@@ -364,32 +364,6 @@ plot(hw_model)
 
 ## Predicciones
 
-
-Para realizar predicciones, utilizaremos tanto la función predict como forecast, y analizaremos las diferencias entre ellas.
-
-Empleamos la función predict para generar predicciones para los próximos 360 pasos (días, apro un año) en el tiempo, e incluimos intervalos de predicción con un nivel de confianza del 95%.
-
-```{r}
-
-predicciones <- predict(hw_model, n.ahead = 360, prediction.interval = TRUE, level=0.95)
-
-```
-
-```{r}
-
-# Visualizar las predicciones
-
-plot(ts_data_dif, main = "Predicciones Holt-Winters", xlab = "Tiempo", ylab = "Temperatura", xlim = c(2014, 2019))
-lines(hw_model$fitted[,1], lty=2, col="blue")
-lines(predicciones[,1], col="red")
-lines(predicciones[,2], lty=2, col="orange")
-lines(predicciones[,3], lty=2, col="orange")
-```
-
-* Como se indica, las líneas negras representan los datos de nuestra serie temporal. Las líneas azules representan el modelo ajustado. Las líneas rojas representan las predicciones para los próximos 30 días. Las líneas naranjas representan los intervalos de confianza asociados con estas predicciones. Como se puede observar, los intervalos se desbordan, lo que indica una alta incertidumbre en nuestras predicciones.
-
-* A pesar de que a partir d elos intervalos se observa una alta incertidumbre, el año que fue pronosticado parece estar ajustado siguiendo la estacionalidad que hubo en los años conocidos.
-
 Utilizando la función forecast, se generan predicciones de nuestro modelo Holt-Winters con niveles de confianza del 80% y del 95%.
 
 ```{r}
@@ -402,7 +376,7 @@ plot(hw_forecast, xlim = c(2014, 2018))
 lines(hw_forecast$fitted, lty=2, col="purple")
 ```
 
-* Como podemos observar, la predicción con la función forecast parece ser bastante similar al resultado anterior. En este caso, es más fácil notar cómo los intervalos de confianza se desbordan.
+Como se indica, las líneas negras representan los datos de nuestra serie temporal. Las líneas moradas representan el modelo ajustado. Las líneas azules representan las predicciones para los próximos 30 días. Las áreas grises representan los intervalos de confianza asociados con estas predicciones. Como se puede observar, los intervalos se desbordan, lo que indica una alta incertidumbre en nuestras predicciones.
 
 ## Evaluación del modelo
 
@@ -414,7 +388,7 @@ Finalmente, es útil examinar el histograma de los residuos para verificar su di
 
 ```{r}
 
-acf(hw_forecast$residuals, lag.max=30, na.action=na.pass)
+acf(hw_forecast$residuals, lag.max=360, na.action=na.pass)
 Box.test(hw_forecast$residuals,  type="Ljung-Box")
 hist(hw_forecast$residuals)
 

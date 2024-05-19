@@ -26,7 +26,7 @@
 <meta name="author" content="Leidy Conde Chavarro" />
 
 
-<meta name="date" content="2024-05-17" />
+<meta name="date" content="2024-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -277,30 +277,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.3</span> Diferenciación<a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#diferenciación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>La diferenciación puede ayudar a estabilizar la media de una serie de tiempo al eliminar los cambios en el nivel de una serie de tiempo y, por lo tanto, eliminar (o reducir) la tendencia . Considerando las observaciones previas que indican que la serie temporal de temperatura no es estacionaria, se recurre a la diferenciación con el fin de lograr esta estacionariedad deseada.</p>
 <p>Antes de aplicar la diferenciación, es importante tener en cuenta el número óptimo de diferenciaciones previamente determinado, que en este caso es uno. Por lo tanto, se procede a diferenciar la serie temporal una sola vez y se genera una nueva descomposición para evaluar nuevamente la estacionalidad y la tendencia en la serie diferenciada.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-1" tabindex="-1"></a>ts_data_dif<span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_data, <span class="at">lag =</span> <span class="dv">30</span>)</span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-1" tabindex="-1"></a>ts_data_dif<span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_data, <span class="at">lag =</span> <span class="dv">360</span>)</span>
 <span id="cb18-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-2" tabindex="-1"></a>descom <span class="ot">&lt;-</span> <span class="fu">decompose</span>(ts_data_dif)</span>
 <span id="cb18-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb18-3" tabindex="-1"></a><span class="fu">plot</span>(descom)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <ul>
-<li><p>Para mantener la estacionalidad y al mismo tiempo reducir la tendencia, con el fin de lograr una serie estacionaria y estacional, se exploraron diferentes valores de lag para encontrar el intervalo de resta de datos que mejor se adaptara a este propósito.</p></li>
-<li><p>Aunque se presentan fluctuaciones alrededor de un nivel constante a lo largo del tiempo, ya no se percibe una tendencia claramente definida de crecimiento.</p></li>
-<li><p>Aunque la estacionalidad ya no es tan marcada, todavía se mantiene presente en la serie temporal, y además, comienza a hacerse evidente que la serie ya se puede empezar a considerar estacionaria.</p></li>
+<li><p>Teniendo en cuenta que en la serie hay estacionalidad y al mismo tiempo tendencia, se realiza una diferenciación con de lag de 360, ya que el periodo estacional se presenta en ese periodo, es decir cada 360 dias.</p></li>
+<li><p>Aunque se presentan fluctuaciones alrededor de un nivel constante a lo largo del tiempo, ya no se percibe una tendencia tan definida de crecimiento.</p></li>
+<li><p>Aunque la estacionalidad ya no es tan marcada, todavía se observa graficamente presente en la serie temporal, y además, comienza a hacerse evidente que la serie ya se puede empezar a considerar estacionaria.</p></li>
 </ul>
 <div id="prueba-de-dickey-fuller-para-la-serie-diferenciada" class="section level3 hasAnchor" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Prueba de Dickey-Fuller para la serie diferenciada<a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#prueba-de-dickey-fuller-para-la-serie-diferenciada" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-1" tabindex="-1"></a><span class="co"># 2. Prueba de raíz unitaria (ADF)</span></span>
 <span id="cb19-2"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-2" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-3" tabindex="-1"></a>prueba <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(ts_data_dif)</span>
-<span id="cb19-4"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-4" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-5" tabindex="-1"></a><span class="fu">print</span>(prueba)</span></code></pre></div>
+<span id="cb19-3"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb19-3" tabindex="-1"></a>prueba <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(ts_data_dif)</span></code></pre></div>
+<pre><code>## Warning in adf.test(ts_data_dif): p-value smaller than printed p-value</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="análisis-exploratorio-de-datos-eda-descomposición-estacionariedad-y-la-diferenciación.html#cb21-1" tabindex="-1"></a><span class="fu">print</span>(prueba)</span></code></pre></div>
 <pre><code>## 
 ##  Augmented Dickey-Fuller Test
 ## 
 ## data:  ts_data_dif
-## Dickey-Fuller = -3.6338, Lag order = 11, p-value = 0.02942
+## Dickey-Fuller = -7.151, Lag order = 10, p-value = 0.01
 ## alternative hypothesis: stationary</code></pre>
 <ul>
-<li>Se observa que el valor p es 0.02. El cual es menor a el nivel de significancia de 0.05. Esto sugiere que es improbable que la serie de tiempo tenga una raíz unitaria, lo que indica estacionariedad en la serie diferenciada.</li>
+<li>Se observa que el valor p es 0.01. El cual es menor a el nivel de significancia de 0.05. Esto sugiere que es improbable que la serie de tiempo tenga una raíz unitaria, lo que indica estacionariedad en la serie diferenciada.</li>
 </ul>
 </div>
 </div>

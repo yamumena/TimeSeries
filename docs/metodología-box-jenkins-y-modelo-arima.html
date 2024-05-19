@@ -26,7 +26,7 @@
 <meta name="author" content="Leidy Conde Chavarro" />
 
 
-<meta name="date" content="2024-05-17" />
+<meta name="date" content="2024-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -273,7 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>3.</strong>Validación y análisis de residuos:</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="metodología-box-jenkins-y-modelo-arima.html#cb36-1" tabindex="-1"></a><span class="co"># Diagnóstico de los residuos</span></span>
 <span id="cb36-2"><a href="metodología-box-jenkins-y-modelo-arima.html#cb36-2" tabindex="-1"></a><span class="fu">checkresiduals</span>(fit)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <pre><code>## 
 ##  Ljung-Box test
 ## 
@@ -290,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb38-3"><a href="metodología-box-jenkins-y-modelo-arima.html#cb38-3" tabindex="-1"></a></span>
 <span id="cb38-4"><a href="metodología-box-jenkins-y-modelo-arima.html#cb38-4" tabindex="-1"></a><span class="co"># Visualizar las predicciones</span></span>
 <span id="cb38-5"><a href="metodología-box-jenkins-y-modelo-arima.html#cb38-5" tabindex="-1"></a><span class="fu">plot</span>(forecasted_values)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <ul>
 <li><p>En general Se ha observa que el pronóstico para un período completo de 365 días aún muestra o mantiene la estacionalidad y pareciera que se adaptara a la serie.</p></li>
 <li><p>Para obtener un mejor modelo se podria intentar aumentar o variar el orden de los términos autoregresivos, diferenciales o de media móvil en el modelo ARIMA para capturar mejor la estructura de autocorrelación en los datos. Sin embargo, podría existir un riesgo de sobreajustar el modelo.</p></li>
