@@ -376,7 +376,7 @@ plot(hw_forecast, xlim = c(2014, 2018))
 lines(hw_forecast$fitted, lty=2, col="purple")
 ```
 
-Como se indica, las líneas negras representan los datos de nuestra serie temporal. Las líneas moradas representan el modelo ajustado. Las líneas azules representan las predicciones para los próximos 30 días. Las áreas grises representan los intervalos de confianza asociados con estas predicciones. Como se puede observar, los intervalos se desbordan, lo que indica una alta incertidumbre en nuestras predicciones.
+Como se indica, las líneas negras representan los datos de nuestra serie temporal. Las líneas moradas representan el modelo ajustado. Las líneas azules representan las predicciones para los próximos 360 días o el proximo año. Las áreas grises representan los intervalos de confianza asociados con estas predicciones. Como se puede observar, los intervalos se desbordan, lo que indica una alta incertidumbre en nuestras predicciones.
 
 ## Evaluación del modelo
 
