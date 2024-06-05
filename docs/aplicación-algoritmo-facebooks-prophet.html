@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5 Metodología Box-Jenkins y Modelo ARIMA | Series de Tiempo Actividad 1</title>
-  <meta name="description" content="5 Metodología Box-Jenkins y Modelo ARIMA | Series de Tiempo Actividad 1" />
+  <title>6 Aplicación algoritmo Facebook´s Prophet | Series de Tiempo Actividad 1</title>
+  <meta name="description" content="6 Aplicación algoritmo Facebook´s Prophet | Series de Tiempo Actividad 1" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5 Metodología Box-Jenkins y Modelo ARIMA | Series de Tiempo Actividad 1" />
+  <meta property="og:title" content="6 Aplicación algoritmo Facebook´s Prophet | Series de Tiempo Actividad 1" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5 Metodología Box-Jenkins y Modelo ARIMA | Series de Tiempo Actividad 1" />
+  <meta name="twitter:title" content="6 Aplicación algoritmo Facebook´s Prophet | Series de Tiempo Actividad 1" />
   
   
   
@@ -33,8 +33,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="holt-winters.html"/>
-<link rel="next" href="aplicación-algoritmo-facebooks-prophet.html"/>
+<link rel="prev" href="metodología-box-jenkins-y-modelo-arima.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -220,96 +220,109 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="metodología-box-jenkins-y-modelo-arima" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">5</span> Metodología Box-Jenkins y Modelo ARIMA<a href="metodología-box-jenkins-y-modelo-arima.html#metodología-box-jenkins-y-modelo-arima" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>La metodología Box-Jenkins es un enfoque sistemático ampliamente utilizado en el análisis de series de tiempo, se aplica a los modelos autorregresivos de media móvil ARMA o a los modelos autorregresivos integrados de media móvil (ARIMA) para encontrar el mejor ajuste de una serie temporal de valores, a fin de que los pronósticos sean más acertados.</p>
-<div id="modelo-arima" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> Modelo ARIMA<a href="metodología-box-jenkins-y-modelo-arima.html#modelo-arima" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Un modelo ARIMA es una técnica estadística utilizada para analizar y predecir valores futuros en una serie temporal basándose en sus datos históricos.</p>
-<p>El modelo ARIMA combina tres componentes esenciales:</p>
+<div id="aplicación-algoritmo-facebooks-prophet" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> Aplicación algoritmo Facebook´s Prophet<a href="aplicación-algoritmo-facebooks-prophet.html#aplicación-algoritmo-facebooks-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Este modelo fue introducido por Facebook (S. J. Taylor &amp; Letham, 2018), originalmente para pronosticar datos diarios con estacionalidad semanal y anual, además de efectos de vacaciones. Más tarde se amplió para cubrir más tipos de datos estacionales. Funciona mejor con series temporales que tienen una fuerte estacionalidad y varias temporadas de datos históricos.</p>
+<p>Prophet puede considerarse un modelo de regresión no lineal de la forma:</p>
+<p>yt=g(t)+s(t)+h(t)+ϵt,</p>
+<p>donde g(t) denota la tendencia lineal, s(t) los comportamientos estacionales, h(t) captura los efectos de las vacaciones y ϵt es el ruido blanco.</p>
+<p>Consideraciones:</p>
 <ul>
-<li><p>AR (AutoRegressive): Captura la dependencia de los valores actuales de la serie con sus valores pasados.</p></li>
-<li><p>I (Integrated): Involucra la diferenciación de la serie de tiempo para convertirla en estacionaria, eliminando tendencias y variaciones no constantes.</p></li>
-<li><p>MA (Moving Average): Refleja la relación entre los valores actuales de la serie y los errores de predicción pasados.</p></li>
+<li><p>Los nodos (o puntos de cambio) para la tendencia lineal por tramos se seleccionan automáticamente si no se especifican explícitamente. Opcionalmente, se puede usar una función logística para establecer un límite superior en la tendencia.</p></li>
+<li><p>El componente estacional consiste en términos de Fourier de los períodos relevantes. De forma predeterminada, el orden 10 se usa para la estacionalidad anual y el orden 3 se usa para la estacionalidad semanal.</p></li>
+<li><p>Los efectos de vacaciones se agregan como variables ficticias simples.</p></li>
+<li><p>El modelo se estima utilizando un enfoque bayesiano para permitir la selección automática de los puntos de cambio y otras características del modelo.</p></li>
 </ul>
-<p>El objetivo principal de utilizar la metodología Box-Jenkins y los modelos ARIMA es encontrar la mejor representación matemática de la serie de tiempo para realizar predicciones precisas y confiables.</p>
+<div id="aplicación-del-modelo-prophet" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Aplicación del modelo Prophet<a href="aplicación-algoritmo-facebooks-prophet.html#aplicación-del-modelo-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En el análisis de las secciones anteriores se evidenció que la serie temporal de la temperatura exhibe una marcada estacionalidad anual. Por lo tanto, el modelo Prophet es adecuado para aplicarse a esta serie.</p>
+<p>Se ajusta el modelo Prophet, se crea un DataFrame para los futuros valores a predecir (por ejemplo, próximos 365 días), y se realizan las predicciones y visualización de los componentes del modelo (tendencia, estacionalidad, etc.)</p>
+<p>Seleccionar y renombrar las columnas necesarias para Prophet</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="aplicación-algoritmo-facebooks-prophet.html#cb39-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="aplicación-algoritmo-facebooks-prophet.html#cb39-2" tabindex="-1"></a>  <span class="fu">select</span>(date, meantemp) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-3"><a href="aplicación-algoritmo-facebooks-prophet.html#cb39-3" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ds =</span> date, <span class="at">y =</span> meantemp)</span></code></pre></div>
+<p>Convertir la columna de fecha al formato Date</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="aplicación-algoritmo-facebooks-prophet.html#cb40-1" tabindex="-1"></a>df<span class="sc">$</span>ds <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(df<span class="sc">$</span>ds, <span class="at">format =</span> <span class="st">&quot;%Y-%m-%d&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="aplicación-algoritmo-facebooks-prophet.html#cb41-1" tabindex="-1"></a>modeli <span class="ot">&lt;-</span> <span class="fu">prophet</span>(df)</span></code></pre></div>
+<pre><code>## Disabling daily seasonality. Run prophet with daily.seasonality=TRUE to override this.</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="aplicación-algoritmo-facebooks-prophet.html#cb43-1" tabindex="-1"></a>future <span class="ot">&lt;-</span> <span class="fu">make_future_dataframe</span>(modeli, <span class="at">periods =</span> <span class="dv">365</span>)</span>
+<span id="cb43-2"><a href="aplicación-algoritmo-facebooks-prophet.html#cb43-2" tabindex="-1"></a>forecast <span class="ot">&lt;-</span> <span class="fu">predict</span>(modeli, future)</span>
+<span id="cb43-3"><a href="aplicación-algoritmo-facebooks-prophet.html#cb43-3" tabindex="-1"></a><span class="fu">plot</span>(modeli, forecast)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="aplicación-algoritmo-facebooks-prophet.html#cb44-1" tabindex="-1"></a><span class="fu">prophet_plot_components</span>(modeli, forecast)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
 </div>
-<div id="metodología-box-jenkins" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> Metodología Box-Jenkins<a href="metodología-box-jenkins-y-modelo-arima.html#metodología-box-jenkins" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>1.</strong>Verificación de estacionariedad y diferenciación:</p>
-<p>Verificar si la serie de tiempo es estacionaria, lo cual significa que sus propiedades estadísticas, como la media y la varianza, son constantes a lo largo del tiempo.Si la serie es estacional y no es estacionaria, aplicar una diferenciación para hacerla estacionaria (diferenciación estacional, para cierto período, si es necesario).</p>
-<p><strong>2.</strong>Identificación de p, d, q para el Modelo ARIMA:</p>
-<p>Ajustar el modelo ARIMA a la serie de tiempo utilizando técnicas de estimación como la máxima verosimilitud. Esto implica encontrar los mejores valores para los parámetros <strong>p</strong>,<strong>d</strong> y <strong>q</strong> que minimicen los errores de predicción.</p>
-<p><strong>3.</strong>Validación y análisis de residuos:</p>
-<p>Después de ajustar el modelo, es IMPORTANTE evaluar los residuos (errores de predicción). Los residuos deben comportarse como un ruido blanco, es decir, no deben mostrar patrones ni autocorrelación significativa.</p>
-<p><strong>4.</strong>Uso del modelo ajustado para realizar predicciones:</p>
-<p>Una vez validado el modelo, se puede utilizar para predecir valores futuros de la serie de tiempo. Las predicciones se basan en la dinámica interna capturada por el modelo ARIMA, proporcionando estimaciones para períodos futuros.</p>
-</div>
-<div id="aplicación-1" class="section level2 hasAnchor" number="5.3">
-<h2><span class="header-section-number">5.3</span> Aplicación<a href="metodología-box-jenkins-y-modelo-arima.html#aplicación-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Verificación de estacionariedad y diferenciación:</p>
-<p>En análisis anteriores de esta serie de tiempo, se aplicó la diferenciación para convertir la serie en estacionaria, teniendo en cuenta la presencia de estacionalidad. Se realizó la prueba de Dickey-Fuller para confirmar la estacionariedad de la serie después de la diferenciación. De esta manera, se cumple el primer supuesto de la metodología Box-Jenkins, que requiere una serie de tiempo estacionaria antes de proceder con el modelado.</p>
-</div>
-<div id="identificación-de-p-d-q-para-el-modelo-arima" class="section level2 hasAnchor" number="5.4">
-<h2><span class="header-section-number">5.4</span> Identificación de p, d, q para el Modelo ARIMA:<a href="metodología-box-jenkins-y-modelo-arima.html#identificación-de-p-d-q-para-el-modelo-arima" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="metodología-box-jenkins-y-modelo-arima.html#cb34-1" tabindex="-1"></a><span class="co"># Ajustar el modelo ARIMA automáticamente</span></span>
-<span id="cb34-2"><a href="metodología-box-jenkins-y-modelo-arima.html#cb34-2" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(ts_data)</span>
-<span id="cb34-3"><a href="metodología-box-jenkins-y-modelo-arima.html#cb34-3" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="metodología-box-jenkins-y-modelo-arima.html#cb34-4" tabindex="-1"></a><span class="co"># Resumen del modelo ajustado</span></span>
-<span id="cb34-5"><a href="metodología-box-jenkins-y-modelo-arima.html#cb34-5" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
-<pre><code>## Series: ts_data 
-## ARIMA(3,1,1)(0,1,0)[365] 
-## 
-## Coefficients:
-##          ar1     ar2      ar3      ma1
-##       0.7150  0.0112  -0.0392  -0.9873
-## s.e.  0.0311  0.0371   0.0311   0.0084
-## 
-## sigma^2 = 4.597:  log likelihood = -2397.96
-## AIC=4805.92   AICc=4805.98   BIC=4830.93
-## 
-## Training set error measures:
-##                      ME     RMSE      MAE        MPE     MAPE      MASE
-## Training set 0.01740133 1.853476 1.214827 -0.2674292 5.197467 0.4752757
-##                     ACF1
-## Training set 0.002740674</code></pre>
-<p>El resultado proporcionado por el resumen anterior muestra lo siguiente:</p>
+<div id="análisis-de-los-resultados-con-facebooks-prophet" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Análisis de los Resultados con Facebook’s Prophet<a href="aplicación-algoritmo-facebooks-prophet.html#análisis-de-los-resultados-con-facebooks-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li><p>El modelo ajustado se especifica como ARIMA(3,1,1)(0,1,0)[365]. El primer conjunto de números (3,1,1) indica el orden de autoregresión (p), el grado de diferenciación (d), y el orden de la media móvil (q) del componente no estacional del modelo.</p></li>
-<li><p>El segundo conjunto de números (0,1,0) indica lo mismo para el componente estacional.</p></li>
-<li><p>El número entre corchetes [365] indica el período estacional, el cual concuerda con el análisis hecho anteriormente.</p></li>
-<li><p>Los coeficientes estimados para los términos autoregresivos son (ar1, ar2, ar3) y el término de media móvil (ma1) junto con sus errores estándar (s.e.). Estos coeficientes indican cómo los valores pasados de la serie de tiempo afectan a los valores actuales y cómo los errores pasados afectan a los valores actuales.</p></li>
-<li><p>Se observa el error medio (ME), el error cuadrático medio (RMSE), el error absoluto medio (MAE), el error porcentual medio (MPE), el error porcentual absoluto medio (MAPE), el error de desviación media absoluta (MASE) y el primer coeficiente de autocorrelación (ACF1). Según los valores de estos errores el modelo en general, parece que el modelo ARIMA tiene un buen ajuste a los datos históricos de entrenamiento, ya que los errores son relativamente bajos en comparación con las escalas de las variables.</p></li>
+<li>Gráfico de Predicciones</li>
 </ul>
+<p>En el primer gráfico, se observa la predicción de la temperatura media a lo largo del tiempo. la Línea Azul Oscura representa la predicción de la temperatura media, las áreas Sombreadas indican los intervalos de confianza del 80% y 95%. La predicción muestra que se conserva la estacionalidad anual ya que se prresenta el mismo patrón, se observa que los intervalos de son amplios y con mayor incertidumbre en los maximos, esto muestra una coherencia con las dispersion de los datos pasados en esta temporada.</p>
+<ul>
+<li>Gráfico de Tendencia:</li>
+</ul>
+<p>Eje Y (trend): Representa la tendencia general de la temperatura.
+Eje X (ds): Representa las fechas.</p>
+<p>La tendencia es relativamente constante entre 2014 y 2015. En 2016, se observa un aumento drástico, rompiendo la tendencia anterior. A partir de 2016, la tendencia intenta estabilizarse, pero sigue mostrando un ligero aumento. En general, la tendencia es levemente ascendente, lo que sugiere un aumento gradual en la temperatura media a lo largo del tiempo.</p>
+<ul>
+<li>Gráfico Semanal Estacional:</li>
+</ul>
+<p>Eje Y (weekly): Representa la variación estacional semanal.
+Eje X (Day of week): Representa los días de la semana.</p>
+<p>El gráfico muestra una clara estacionalidad semanal, con un aumento en la temperatura que comienza el domingo y alcanza su punto máximo el miércoles. Posteriormente, la temperatura desciende hasta llegar a su punto mínimo el sábado. Este patrón sugiere una variación predecible en la temperatura a lo largo de la semana, ademas que los dias miercoles de cada semana presentan mayores temperaturas y los sabados y los domingos menores.</p>
+<ul>
+<li>Gráfico Anual Estacional:</li>
+</ul>
+<p>Eje Y (yearly): Representa la variación estacional anual.
+Eje X (Day of year): Representa los días del año.</p>
+<p>En este gráfico se observa claramente el patrón estacional anual identificado en análisis anteriores. La temperatura comienza a aumentar desde enero, alcanzando su punto máximo en junio. Posteriormente, la temperatura desciende hasta llegar nuevamente a su punto mínimo en enero del siguiente año, momento en el que vuelve a iniciar el ciclo ascendente. Este patrón sugiere que junio es el mes con las temperaturas más altas, mientras que enero presenta las temperaturas más bajas.</p>
 </div>
-<div id="evaluación-del-modelo-1" class="section level2 hasAnchor" number="5.5">
-<h2><span class="header-section-number">5.5</span> Evaluación del modelo:<a href="metodología-box-jenkins-y-modelo-arima.html#evaluación-del-modelo-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="metodología-box-jenkins-y-modelo-arima.html#cb36-1" tabindex="-1"></a><span class="co"># Diagnóstico de los residuos</span></span>
-<span id="cb36-2"><a href="metodología-box-jenkins-y-modelo-arima.html#cb36-2" tabindex="-1"></a><span class="fu">checkresiduals</span>(fit)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div id="justificación-para-la-variable-como-una-regresión-y-evaluación" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Justificación para la Variable como una Regresión y Evaluación<a href="aplicación-algoritmo-facebooks-prophet.html#justificación-para-la-variable-como-una-regresión-y-evaluación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="aplicación-algoritmo-facebooks-prophet.html#cb45-1" tabindex="-1"></a><span class="co"># Instalar y cargar librerías adicionales si es necesario</span></span>
+<span id="cb45-2"><a href="aplicación-algoritmo-facebooks-prophet.html#cb45-2" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb45-3"><a href="aplicación-algoritmo-facebooks-prophet.html#cb45-3" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="aplicación-algoritmo-facebooks-prophet.html#cb45-4" tabindex="-1"></a><span class="co"># Diagnóstico de los residuos</span></span>
+<span id="cb45-5"><a href="aplicación-algoritmo-facebooks-prophet.html#cb45-5" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> forecast<span class="sc">$</span>yhat <span class="sc">-</span> df<span class="sc">$</span>y</span></code></pre></div>
+<pre><code>## Warning in forecast$yhat - df$y: longitud de objeto mayor no es múltiplo de la
+## longitud de uno menor</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="aplicación-algoritmo-facebooks-prophet.html#cb47-1" tabindex="-1"></a><span class="co"># Ver los primeros registros de los residuos</span></span>
+<span id="cb47-2"><a href="aplicación-algoritmo-facebooks-prophet.html#cb47-2" tabindex="-1"></a><span class="fu">head</span>(residuals)</span></code></pre></div>
+<pre><code>## [1] 1.938614 4.679326 4.892959 3.368750 5.971124 4.967914</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="aplicación-algoritmo-facebooks-prophet.html#cb49-1" tabindex="-1"></a><span class="co"># Realizar pruebas de autocorrelación para los residuos</span></span>
+<span id="cb49-2"><a href="aplicación-algoritmo-facebooks-prophet.html#cb49-2" tabindex="-1"></a><span class="fu">acf</span>(residuals, <span class="at">main=</span><span class="st">&quot;ACF de los Residuos&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="aplicación-algoritmo-facebooks-prophet.html#cb50-1" tabindex="-1"></a><span class="co"># Prueba de Ljung-Box para verificar la autocorrelación de los residuos</span></span>
+<span id="cb50-2"><a href="aplicación-algoritmo-facebooks-prophet.html#cb50-2" tabindex="-1"></a><span class="fu">Box.test</span>(residuals, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
 <pre><code>## 
-##  Ljung-Box test
+##  Box-Ljung test
 ## 
-## data:  Residuals from ARIMA(3,1,1)(0,1,0)[365]
-## Q* = 360.51, df = 289, p-value = 0.002664
-## 
-## Model df: 4.   Total lags used: 293</code></pre>
+## data:  residuals
+## X-squared = 1739.8, df = 1, p-value &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="aplicación-algoritmo-facebooks-prophet.html#cb52-1" tabindex="-1"></a><span class="co"># Gráfico de los residuos</span></span>
+<span id="cb52-2"><a href="aplicación-algoritmo-facebooks-prophet.html#cb52-2" tabindex="-1"></a><span class="fu">plot</span>(residuals, <span class="at">type=</span><span class="st">&#39;l&#39;</span>, <span class="at">main=</span><span class="st">&#39;Residuos del Modelo Prophet&#39;</span>, <span class="at">ylab=</span><span class="st">&#39;Residuos&#39;</span>, <span class="at">xlab=</span><span class="st">&#39;Tiempo&#39;</span>)</span>
+<span id="cb52-3"><a href="aplicación-algoritmo-facebooks-prophet.html#cb52-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">col=</span><span class="st">&#39;red&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-26-2.png" width="672" /></p>
+<p>Para justificar el uso de la serie temporal de temperatura media como una regresión, se consideran varios aspectos basados en el análisis de residuos y las pruebas estadísticas realizadas. Los resultados obtenidos indican si el modelo Prophet es adecuado y si la variable puede ser tratada como una regresión.</p>
 <ul>
-<li>Se observa un valor p bajo (p=0.002664), sugiere que hay evidencia de autocorrelación significativa en los residuos del modelo ARIMA, lo que indica que el modelo puede no estar capturando completamente la estructura de autocorrelación en los datos. Esto sugiere que el modelo podría necesitar ajustes adicionales.</li>
+<li>Autocorrelación de los Residuos (ACF):</li>
 </ul>
-</div>
-<div id="uso-del-modelo-para-realizar-predicciones" class="section level2 hasAnchor" number="5.6">
-<h2><span class="header-section-number">5.6</span> Uso del modelo para realizar predicciones:<a href="metodología-box-jenkins-y-modelo-arima.html#uso-del-modelo-para-realizar-predicciones" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="metodología-box-jenkins-y-modelo-arima.html#cb38-1" tabindex="-1"></a><span class="co"># Predicción de los siguientes 360 dias</span></span>
-<span id="cb38-2"><a href="metodología-box-jenkins-y-modelo-arima.html#cb38-2" tabindex="-1"></a>forecasted_values <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> <span class="dv">360</span>)</span>
-<span id="cb38-3"><a href="metodología-box-jenkins-y-modelo-arima.html#cb38-3" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="metodología-box-jenkins-y-modelo-arima.html#cb38-4" tabindex="-1"></a><span class="co"># Visualizar las predicciones</span></span>
-<span id="cb38-5"><a href="metodología-box-jenkins-y-modelo-arima.html#cb38-5" tabindex="-1"></a><span class="fu">plot</span>(forecasted_values)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>El gráfico de la ACF de los residuos muestra que existe una fuerte autocorrelación en los residuos a lo largo de múltiples rezagos. Esto indica que el modelo Prophet no ha capturado completamente la estructura temporal de los datos y que los residuos no se comportan como ruido blanco.</p>
 <ul>
-<li><p>En general Se ha observa que el pronóstico para un período completo de 365 días aún muestra o mantiene la estacionalidad y pareciera que se adaptara a la serie.</p></li>
-<li><p>Para obtener un mejor modelo se podria intentar aumentar o variar el orden de los términos autoregresivos, diferenciales o de media móvil en el modelo ARIMA para capturar mejor la estructura de autocorrelación en los datos. Sin embargo, podría existir un riesgo de sobreajustar el modelo.</p></li>
+<li>Gráfico de Residuos:</li>
 </ul>
+<p>El gráfico de residuos del modelo Prophet muestra un patrón, lo que podria sugerir que los residuos no son estacionarios y tienen una tendencia.</p>
+<p>Prueba de Ljung-Box:</p>
+<p>El resultado de la prueba de Ljung-Box es significativo (p-valor &lt; 2.2e-16), lo que indica que hay autocorrelación significativa en los residuos. Esto confirma que los residuos del modelo no son independientes y tienen una estructura temporal no capturada por el modelo.</p>
+<ul>
+<li>Comparación de Modelos</li>
+</ul>
+<p>Resulta útil contrastar el rendimiento del modelo Prophet con los enfoques previos, tales como ARIMA y Holt-Winters, que hemos examinado anteriormente. Todos los modelos muestran un p-value notablemente bajo, menor que el nivel de significancia establecido, ademas el analisis de ACF indica la presencia de autocorrelación en los residuos. Estas observaciones sugieren que ninguno de los modelos se ajusta adecuadamente a los datos, y por lo tanto, podrían beneficiarse de mejoras adicionales.</p>
+<ul>
+<li>Viabilidad del Modelo Prophet</li>
+</ul>
+<p>A pesar de las limitaciones observadas en el análisis de residuos, el modelo Prophet puede seguir siendo útil debido a su capacidad para descomponer la serie temporal en componentes interpretables como tendencia y estacionalidad. Sin embargo, los resultados indican que se requieren ajustes adicionales o el uso de modelos complementarios para mejorar la precisión de las predicciones, bajo estas circunstancias la serie podria no ajustarse totalmente a una regresión.</p>
+
 </div>
 </div>
             </section>
@@ -317,8 +330,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="holt-winters.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="aplicación-algoritmo-facebooks-prophet.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="metodología-box-jenkins-y-modelo-arima.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

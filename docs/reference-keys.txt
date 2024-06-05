@@ -29,3 +29,13 @@ modelo-arima
 esquema-box-jenkins
 metodología-box-jenkins
 aplicación-1
+aplicación-algoritmo-facebooks-prophet
+aplicación-del-modelo-prophet
+análisis-de-los-resultados-con-facebooks-prophet
+justificación-para-la-variable-como-una-regresión
+análisis-de-residuos
+identificación-de-p-d-q-para-el-modelo-arima
+validación-y-análisis-de-residuos
+uso-del-modelo-para-realizar-predicciones
+evaluación-del-modelo-1
+justificación-para-la-variable-como-una-regresión-y-evaluación
