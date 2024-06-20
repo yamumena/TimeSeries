@@ -35,4 +35,17 @@ h1:aplicación-algoritmo-facebooks-prophet Aplicación algoritmo Facebook´s Pro
 h2:aplicación-del-modelo-prophet Aplicación del modelo Prophet
 h2:análisis-de-los-resultados-con-facebooks-prophet Análisis de los Resultados con Facebook’s Prophet
 h2:justificación-para-la-variable-como-una-regresión-y-evaluación Justificación para la Variable como una Regresión y Evaluación
+h1:configuración-y-entrenamiento-de-redes-neuronales-elman-y-jordan-red-neuronal-elman Configuración y Entrenamiento de Redes Neuronales Elman y Jordan Red Neuronal Elman
+h1:redes-neuronales-recurrentes Redes Neuronales Recurrentes
+h2:modelo-elman-y-modelo-jordan Modelo Elman y Modelo Jordan
+h3:normalización-de-datos Normalización de datos
+h3:división-entre-conjunto-de-entrenamiento-y-prueba División entre conjunto de entrenamiento y prueba
+h3:ventaneo Ventaneo
+h3:inputs-y-outputs Inputs y Outputs
+h2:modelo-elman Modelo Elman
+h3:métricas-para-el-modelo Métricas para el modelo
+h3:desempeño-de-la-red-de-elman Desempeño de la red de Elman
+h2:modelo-jordan Modelo Jordan
+h3:desempeño-de-la-red-de-jordan Desempeño de la red de Jordan
+h3:análisis-de-resultados Análisis de resultados
 

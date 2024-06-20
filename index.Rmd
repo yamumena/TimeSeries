@@ -47,8 +47,6 @@ library(tseries)
 library(forecast)
 library(Kendall)
 library(prophet)
-
-
 ```
 
 # Análisis Exploratorio de Datos (EDA): Promedio Móvil, Rezagos y Estacionalidad
@@ -69,6 +67,8 @@ data <- rbind(data1, data2)
 ts_data <-  ts(data,start = c(2013, 1), end = c(2017, 4), frequency=365)
 # Escoger solo Temperatura media
 ts_data <- ts_data[, "meantemp"]
+
+
 ```
 
 ## Resumen general de la serie temporal
@@ -617,5 +617,246 @@ Resulta útil contrastar el rendimiento del modelo Prophet con los enfoques prev
 A pesar de las limitaciones observadas en el análisis de residuos, el modelo Prophet puede seguir siendo útil debido a su capacidad para descomponer la serie temporal en componentes interpretables como tendencia y estacionalidad. Sin embargo, los resultados indican que se requieren ajustes adicionales o el uso de modelos complementarios para mejorar la precisión de las predicciones, bajo estas circunstancias la serie podria no ajustarse totalmente a una regresión.
 
 
+# Configuración y Entrenamiento de Redes Neuronales Elman y Jordan Red Neuronal Elman
 
+# Redes Neuronales Recurrentes
+
+Una Red Neuronal Recurrente (RNN, por sus siglas en inglés) es un tipo de red neuronal artificial diseñada para procesar secuencias de datos. A diferencia de las redes neuronales tradicionales que consideran las entradas de forma independiente, las RNNs tienen una estructura interna que les permite mantener una "memoria" de entradas anteriores. Esto se logra a través de conexiones recurrentes que retroalimentan la información de las capas ocultas a sí mismas, lo que les permite capturar dependencias temporales en los datos.
+
+Estas redes están compuestos por:
+
+- Capa de entrada: Recibe la secuencia de datos.
+- Capa Oculta: Procesa la información actual y la retroalimenta para influir en el procesamiento futuro.
+- Capa de Salida: Genera la salida de la red, que puede ser una predicción o una clasificación.
+
+Cada nodo en la capa oculta no solo recibe la entrada actual sino también la salida de la capa oculta del paso anterior. Esto permite que la red mantenga información sobre lo que ha visto anteriormente y ajuste su salida en consecuencia. Las RNNs son particularmente útiles para el pronóstico de series temporales debido a su capacidad para manejar datos secuenciales y capturar patrones temporales.
+
+En este sentido se trabajará con 2 modelos: Modelo Elman y Modelo Jordan.
+
+## Modelo Elman y Modelo Jordan
+
+```{r librerias1, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(readxl)
+library(tseries)
+library(forecast)
+library(MLmetrics)
+library(prophet)
+library(RSNNS)
+library(quantmod)
+options(scipen = 100, digits = 2)
+```
+
+### Normalización de datos
+
+La normalización se realiza para que las entradas de la red neuronal estén en un rango común, generalmente entre 0 y 1. Esto ayuda a mejorar el rendimiento y la estabilidad del entrenamiento del modelo.
+
+
+```{r}
+
+data_normalizada <- (ts_data-min(ts_data))/(max(ts_data)-min(ts_data))  
+plot(data_normalizada)
+
+```
+### División entre conjunto de entrenamiento y prueba
+Se divide el conjunto de datos en un 80% para entrenamiento y un 20% para test.
+
+
+```{r}
+# Crear conjuntos de entrenamiento y prueba
+tamano_total <- length(data_normalizada)
+set.seed(123)
+tamano_train <- round(tamano_total*0.80, digits = 0)
+train_data <-0:(tamano_train-1)
+test_data <- (tamano_train):tamano_total
+```
+
+### Ventaneo
+
+Se crea un conjunto de datos con un n columnas donde cada columna representa un valor futuro de la serie temporal, utilizando una variable de tipo zoo, equivalente al período de retardo de la serie.Dado que esta serie temporal es diaria, y se toma desde enero de 2013 a marzo de 2017, se construyen 30 columnas que corresponden a 30 días. Esta técnica es conocida como "ventaneo".
+
+Primero se convierte la  variable en tipo zoo y se crea una función que construya estas columnas y un dataframe vacío donde estarán todas las columnas.
+
+```{r}
+
+y<-as.zoo(data_normalizada)
+crear_columna <- function(data, n){
+  Lag(data,k=n)
+}
+
+datalogN <-  list()
+
+```
+
+Se aplica la función 30 veces y se combinan los resultados.
+
+```{r}
+
+for (n in 1:30) {
+  datalogN[[n]] <- crear_columna(y, n)
+}
+
+datalogN <- do.call(cbind, datalogN)
+colnames(datalogN) <- paste0("x", 1:30)
+datalogN<-cbind(y,datalogN)
+```
+
+Cuando se tiene el conjunto de datos se eliminan los NA desplazando la serie.
+
+```{r}
+datalogN <- datalogN[-(1:30),]
+```
+
+### Inputs y Outputs
+
+Se definen los valores de entrada y salida de la red neuronal.
+
+```{r}
+inputs <- datalogN[,2:31]
+outputs <- datalogN[,1]
+```
+
+## Modelo Elman
+
+Es una Red neuronal recurrente simple que incorpora una capa de contexto para almacenar y utilizar la información de los estados anteriores de la red, permitiendo así que el modelo tenga una "memoria" a corto plazo.
+
+Estas redes están compuestos por:
+
+- Capa de entrada: Recibe la secuencia de datos.
+- Capa Oculta: Realiza las transformaciones no lineales. Se retroalimenta a sí misma a través de la capa de contexto.
+- Capa de Contexto: Almacena los valores anteriores de la capa oculta y los usa como entradas adicionales en el siguiente paso de tiempo.
+- Capa de Salida: Genera la salida de la red, que puede ser una predicción o una clasificación.
+
+Se configura la red de Elman explorando diversas combinaciones de neuronas en las capas ocultas y número máximo de iteraciones, y aunque apenas se ha explorado el ritmo de aprendizaje, se busca ajustar la curva de predicción al modelo de la serie de la mejor manera posible. se ha establecido una semilla para asegurar la reproducibilidad de los resultados al crear nuestra red neuronal.
+
+```{r}
+
+set.seed(123)
+fit<-elman(inputs[train_data],outputs[train_data],size=c(12,5),learnFuncParams=c(0.1),maxit=50000)
+
+```
+
+* Se nota la evolución del error de red con el número de iteraciones para los parámetros expuestos. 
+
+
+```{r}
+plotIterativeError(fit, main = "Error Iterativo")
+```
+
+* Se observa que el error converge rápidamente a 0.
+
+Luego se procede a realizar la predicción utilizando los datos restantes de la serie, es decir, los datos seleccionados para el conjunto de prueba. Una vez entrenado el modelo, se evalua y visualiza gráficamente para analizar su ajuste.
+
+```{r}
+y <- as.vector(outputs[-test_data])
+plot(y,type="l")
+pred <- predict(fit, inputs[-test_data])
+lines(pred,col = "red")
+```
+
+El modelo tiene un ajuste satisfactorio con los parámetros elegidos, ya que la curva del modelo sigue de cerca la curva de la serie predicha. Ahora, aprovechando el efecto de memoria, se avanza la serie temporal al menos en un valor con alta precisión. Para lograr esto, se reintroducen los datos de entrenamiento.
+
+```{r}
+predictions <- predict(fit,inputs[-train_data])
+
+```
+
+* Se Desnormalizan los datos.
+
+```{r}
+predicciones <- predictions*(max(ts_data)-min(ts_data))+min(ts_data)
+
+```
+
+* Representación de los valores predichos.
+
+
+```{r}
+x <- 1:(tamano_total+length(predicciones))
+y <- c(as.vector(ts_data),predicciones)
+plot(x[1:tamano_total], y[1:tamano_total],col = "blue", type="l")
+lines( x[(tamano_total):length(x)], y[(tamano_total):length(x)], col="red")
+```
+
+### Métricas para el modelo
+
+```{r}
+data2 <- data[1546:1576,]
+data_real <- ts(data2$meantemp, start = c(2017,84), end = c(2017, 113), frequency = 365)
+prediccionesc <- predicciones[1:30]
+predicciones_ts <- ts(prediccionesc, start = c(2017,84), end = c(2017, 113), frequency = 365)
+```
+
+### Desempeño de la red de Elman
+
+```{r}
+accuracy(predicciones_ts,data_real)
+```
+
+## Modelo Jordan
+
+La principal diferencia entre el modelo Jordan y el modelo Elman radica en cómo se realiza la retroalimentación de la capa oculta:
+
+- Capa de Entrada: Recibe la secuencia de datos de entrada, similar al modelo Elman.
+- Capa Oculta: Realiza transformaciones no lineales sobre los datos de entrada. En el modelo Jordan, la capa oculta no se retroalimenta a sí misma directamente como en el modelo Elman.
+- Capa de Contexto: En el modelo Jordan, la retroalimentación se realiza desde la capa de salida hacia la capa de contexto. La capa de contexto almacena y utiliza la salida generada en el paso de tiempo anterior como entrada adicional en el siguiente paso de tiempo.
+- Capa de Salida: Genera la salida final de la red neuronal, que puede ser una predicción en modelos de series temporales o una clasificación en modelos de aprendizaje supervisado.
+En el modelo Jordan, la salida también se utiliza para retroalimentar la capa de contexto.
+
+Construcción del modelo
+
+```{r}
+set.seed(42)
+fit_jordan <-jordan(inputs[train_data],outputs[train_data],size=12,learnFuncParams=c(0.1),
+             maxit=50000)
+
+plotIterativeError(fit_jordan, main = "Error Iterativo")
+```
+
+
+
+```{r}
+# Comparación
+yy <- as.vector(outputs[-test_data])
+plot(yy,type="l")
+predd <- predict(fit_jordan, inputs[-test_data])
+lines(predd,col = "red")
+
+```
+
+
+```{r}
+# Predicciones
+predictions <- predict(fit_jordan,inputs[-train_data])
+predicciones_jordan <- predictions*(max(ts_data)-min(ts_data))+min(ts_data)
+
+```
+
+
+```{r}
+# Predicciones
+x <- 1:(tamano_total+length(predicciones_jordan))
+y <- c(as.vector(ts_data),predicciones_jordan)
+plot(x[1:tamano_total], y[1:tamano_total],col = "blue", type="l")
+lines( x[(tamano_total):length(x)], y[(tamano_total):length(x)], col="red")
+```
+
+
+Métricas para el modelo Jordan
+
+```{r}
+
+prediccionesc_jordan <- predicciones_jordan[1:30]
+prediccionesjordan_ts <- ts(prediccionesc_jordan, start = c(2017,84), end = c(2017, 113), frequency = 365)
+```
+
+### Desempeño de la red de Jordan
+
+```{r}
+accuracy(prediccionesjordan_ts,data_real)
+```
+### Análisis de resultados
+
+Al comparar el desempeño entre las redes de Elman y Jordan aplicadas a la serie de tiempo, la red de Elman mostró un rendimiento significativamente superior. Las métricas de error, incluyendo RMSE, MAE y MAPE, fueron considerablemente más bajas en Elman, indicando predicciones más precisas y cercanas a los valores reales de la stemperaturras. Además, la red de Elman presentó menor autocorrelación en los errores (ACF1) y un menor valor de Theil's U, sugiriendo una mejor capacidad predictiva y una mayor estabilidad en comparación con Jordan. 
 

@@ -39,3 +39,15 @@ validación-y-análisis-de-residuos
 uso-del-modelo-para-realizar-predicciones
 evaluación-del-modelo-1
 justificación-para-la-variable-como-una-regresión-y-evaluación
+configuración-y-entrenamiento-de-redes-neuronales-elman-y-jordan-red-neuronal-elman
+redes-neuronales-recurrentes
+modelo-elman-y-modelo-jordan
+normalización-de-datos
+ventaneo
+inputs-y-outputs
+modelo-elman
+métricas-para-el-modelo
+desempeño-de-la-red-de-elman
+modelo-jordan
+desempeño-de-la-red-de-jordan
+análisis-de-resultados
