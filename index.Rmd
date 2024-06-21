@@ -616,9 +616,6 @@ Resulta útil contrastar el rendimiento del modelo Prophet con los enfoques prev
 
 A pesar de las limitaciones observadas en el análisis de residuos, el modelo Prophet puede seguir siendo útil debido a su capacidad para descomponer la serie temporal en componentes interpretables como tendencia y estacionalidad. Sin embargo, los resultados indican que se requieren ajustes adicionales o el uso de modelos complementarios para mejorar la precisión de las predicciones, bajo estas circunstancias la serie podria no ajustarse totalmente a una regresión.
 
-
-# Configuración y Entrenamiento de Redes Neuronales Elman y Jordan Red Neuronal Elman
-
 # Redes Neuronales Recurrentes
 
 Una Red Neuronal Recurrente (RNN, por sus siglas en inglés) es un tipo de red neuronal artificial diseñada para procesar secuencias de datos. A diferencia de las redes neuronales tradicionales que consideran las entradas de forma independiente, las RNNs tienen una estructura interna que les permite mantener una "memoria" de entradas anteriores. Esto se logra a través de conexiones recurrentes que retroalimentan la información de las capas ocultas a sí mismas, lo que les permite capturar dependencias temporales en los datos.
@@ -856,7 +853,7 @@ prediccionesjordan_ts <- ts(prediccionesc_jordan, start = c(2017,84), end = c(20
 ```{r}
 accuracy(prediccionesjordan_ts,data_real)
 ```
-### Análisis de resultados
+## Análisis de Resultados
 
 Al comparar el desempeño entre las redes de Elman y Jordan aplicadas a la serie de tiempo, la red de Elman mostró un rendimiento significativamente superior. Las métricas de error, incluyendo RMSE, MAE y MAPE, fueron considerablemente más bajas en Elman, indicando predicciones más precisas y cercanas a los valores reales de la stemperaturras. Además, la red de Elman presentó menor autocorrelación en los errores (ACF1) y un menor valor de Theil's U, sugiriendo una mejor capacidad predictiva y una mayor estabilidad en comparación con Jordan. 
 
